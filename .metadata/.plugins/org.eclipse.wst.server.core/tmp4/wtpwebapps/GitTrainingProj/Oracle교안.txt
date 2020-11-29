@@ -1,0 +1,2615 @@
+[기본 명령어]
+
+	1. Orcale에 Connect:
+	
+		 dos>sqlplus 아이디/암호 혹은 sqlplus만
+
+	2. Connect close하기
+
+		 sql>exit 혹은 quit
+
+
+	3. 현재 세션의 사용자 보기
+
+		sql>show user
+
+	4. 해당 사용자의 테이블 목록 보기(select는 ;(세미콜론) 꼭 붙여야함
+
+		sql>select * from tab;
+
+	5. 테이블 구조 보기
+
+		sql>desc 테이블명;
+
+	5. 로그인 사용자 바꾸기
+
+		sql>conn 사용자아이디/암호 혹은 conn;
+
+
+	※최고 관리자 계정(system < sys)으로 로그인 하는 방법
+
+       [ system계정으로 로그인]
+	방법1]
+
+		dos>sqlplus system/비밀번호(오라클설치시 설정한 비밀번호)
+	
+	방법2]
+	       dos>sqlplus /nolog
+	        
+		sql>conn  system/orcl1234
+
+	[sys계정으로 로그인]
+
+		dos>sqlplus /nolog
+
+		sql>conn /as sysdba
+
+
+
+	*ED명령어
+	-쿼리문 작성시 메모장으로 작성후 실행 시키는 방법
+
+		1. SQL>ED 작성할파일이름
+
+			예] SQL>ED MYBOARD[엔터]
+
+		2. 메모장에서 BORAD테이블 작성
+
+		   마지막 문장에 / 를 꼭 붙여 준다
+
+		   작성후 저장 그리고 파일 닫기
+
+		3. 실행시에는 SQL>@MYBOARD[엔터]
+
+
+		4.기존 내용 수정시에는 SQL>ED MYBOARD[엔터]치면 메모장 이 나옴
+
+
+
+[오라클 자료형]
+
+	 BINARY_INTEGER: - 2147483647에서 2147483647 사이의 정수(4Byte:-2^31-1 ~ 2^31-1)
+		           - java의 int형과 같다
+	 NUMBER:숫자 데이터/최대 38자리의 정수,실수
+		 - java의 float형과 같다
+	 NUMBER(n):숫자 데이타/최대 n자리까지의 정수 - 자릿수
+		- java의 float형과 같다
+	 
+	 NUMBER(p,s):숫자 데이타/부동 소수점 p는 소수점을 제외한 전체 자리수
+	                                     s는 소수점이하의 자리수
+					     정수자리는: p-s 자리수 여야됨.
+					     
+			예] salary number(5,2) +>전체 자리수는 5 소수점 이하는 2자리
+			    123.56(O) ,1234.34(X),
+			    123.3456789(O) ->소수점 2자리 이하는 반올림 처리됨(123.35)
+                123(o)
+			    1234(x)
+			    123.1(o)
+			    12(o)
+			     
+ 
+  
+	
+	 
+     CHAR(size): 주어진 size만큼 고정 길이 문자저장
+			    필드 생성시에는 size 최대값이 2000임. 
+	                    단위는 byte
+			    영문 및 숫자는 최대 2000자까지
+			    한글(유니코드)은 최대 1000자까지 저장
+	
+	 NCHAR(size):주어진 size만큼 고정 길이 문자저장
+	                    필드 생성시에는 size 최대값이 1000임. 
+			    유니코드 저장할때 사용
+		            단위는 글자
+			    영문 및 숫자는 최대 1000자까지
+			    한글(유니코드)은 최대 1000자까지 저장
+
+	 VARCHAR2(size):가변 길이 문자 데이타
+				  필드 생성시에는 size 최대값이 4000임. 
+				  단위는 byte
+			          영문 및 숫자는 최대 4000자까지
+			          한글(유니코드)은 최대 2000자까지 저장
+	 NVARCHAR2(size):가변 길이 문자 데이타
+				   필드 생성시에는 size 최대값이 2000임.
+			           단위는 글자
+				   영문 및 숫자는 최대 2000자까지
+			           한글(유니코드)은 최대 2000자까지 저장
+
+	 LONG:가변길이 문자열(최대 4GB)
+	 LONG RAW:가변길이의 바이너리 데이타(2GB)/PL/SQL에 의해 해석되지 않는 자료형
+
+	 CLOB:대용량의 텍스트 데이타를 저장(최대4GB)
+	 BLOB:대용량의 바이너리 데이터 저장(최대 4GB).이미지 저장시 사용
+
+	  - 지정하지 않는다면 디폴트 길이는 1로 설정됩니다.
+	 DATE : 날짜와 시간에 대한 기본형. 
+	
+
+	※ 문자를 저장할때는 그 값을 '(single Quotation)으로 감싸라
+	    숫자(정수나 실수)를 저장할때는 감싸지 말아라
+
+	    단, 숫자형식인 경우 '으로 감싸도  숫자타입(number)의 컬럼에 입력이 된다.
+	        왜냐하면 숫자형식이면 자동으로 숫자로 형변환 됨.
+
+		문자는 무조건 '감싸야 한다.
+
+
+[SQL]
+
+	-SQL(Structred Query Language)-구조화된 질의어
+
+	: DBMS(Oracle,MySQL,MS-SQL,DB2,INFORMIX등)의 데이타를 제어하기위한 표준 질의어
+
+
+	DDL문(Data Definiton Language) :Create(생성),Alter(수정),Drop(삭제)
+                                        -데이타가 아니라 DBMS에서 관리하는 개체 예를들면
+                                         Table,View 혹은 StoredProcedure등을 생성하고 삭제하고 
+                                         수정할때 사용하는 질의어
+
+	DML문(Data Manipulation Language):Table에 저장된 데이타를 
+	                                                   Select(조회),Insert(삽입),수정(Update)
+                                           Delete(삭제)하는 질의어
+
+
+	DCL문(Data Control Language)문: 사용자 계정을 만들거나 사용자에게 권한을 부여하거나
+                                        부여한 권한을 뺐는 질의어(Grant ,Revoke)
+
+
+
+[SELECT 문] 
+
+	-데이터를 조회하고자할 때 사용하는 DML문
+
+	
+	기본형식)- 외우기 
+
+		SELECT 컬럼이름,컬럼이름,.....	  
+ 
+		FROM 테이블 이름
+
+		[WHERE 찾는 조건]
+
+		[GROUP BY 결과 데이터 그룹회]
+
+			[HAVING 그룹에서 찾는 조건]
+
+		[ORDER BY 데이터 정렬 표현]
+
+
+	쿼리실행 순서]
+
+		FROM->WHERE->GROUP BY ->HAVING ->SELECT->ORDER BY
+
+		예]SELECT ROWNUM,ENAME,EMPNO 
+		FROM EMP 
+		WHERE ENAME LIKE '%S%' 
+		ORDER BY EMPNO DESC;
+
+
+	1. 모든 열 선택
+
+		SELECT 키워드에 "*"를 사용하여 모든 열을 조회 할 수 있다.
+
+	2. 특정 컬럼 선택
+
+		테이블의 특정 컬럼을 검색하고자 할 경우 Column이름을 ","로 구분하여 명시함으로써
+		특정컬럼을 출력 할 수 있다.
+		출력 순서는 SELECT문 뒤에 기술한 Column 의 순서대로 출력 됨.
+
+	3. 산술 표현식
+		 
+		 데이터가 출력되는 방식을 수정하거나 계산을 수행하고자 할 때 
+		 산술 표현식을 사용한다.
+		 산술 표현식은 열 이름,숫자상수,문자 상수,
+		 산술 연산자를 포함 할 수 잇으며 연산자는 +
+		   -, *, /,를 사용함.
+
+
+	4. 열에 별칭 부여
+
+		질의의 결과를 출력할 때 사용자가 이해하기 쉽게 열에 이름을 부여 할 수 있다.
+
+		-열 이름 [AS] "별칭"
+		 별칭에 공백을 주거나 '을 주고 싶을때는 무조건 "으로 감싸라
+		-열 이름  별칭
+		
+	5. 중복행의 제거
+
+		
+		결과에서 중복되는 행을 제거하기 위해서는 
+		SELECT 키워드 바로 뒤에 distinct를 기술한다.
+
+		-DISTINCT라는 키워드는 항상 SELECT 바로 다음에 기술한다.
+		-DISTINCT뒤에 나타나는 컬럼들은 모두 DISTINCT의 영향을 받는다
+		-DISTINCT뒤에 여러 개의 컬럼을 기술하엿을 때 나타나는 행은 
+		  컬럼의 조합(AND조합)들이
+		 중복되지 않게 나타난다.
+
+
+	6.특정 행의 검색
+
+		일반적인 경우 테이블에 있는 모든 자료를 조회할 필요 없이 
+		사용자가 원하는 자료를
+		조회하는 경우 WHERE절을 사용하여 조회한다.
+
+		-WHERE절을 사용하여 행들을 제한할 수 있다.
+		-WHERE절은 FROM절 다음에 기술한다.
+		-조건은 아래의 것으로 구성된다.
+		 COLUMN명,표현식,상수,문자, 비교연산자,SQL연산자,논리 연산자등
+
+		비교연산자에는 = ,> ,>=, < , <=, <>(!=) 등이 있고
+		SQL 연산자에는 BETWEEN a AND b(AND연산과 ,  IN ,LIKE,IS NULL(IS NOT NULL),
+		||(문자열 연결시) 등이 잇고
+		논리 연산자에는 AND , OR,  NOT 이 있다.
+       
+		
+		
+		
+
+		[SQL 연산자]
+
+			1] BETWEEN연산자
+				두 값의 범위에 해당하는 행을 출력하기 위해 사용한다.
+				BETWEEN연산자는  컬럼 >= 값 AND 컬럼 <= 값과 같은 의미이다.
+
+				컬럼명 BETWEEN 값1 AND 값2
+				-> 컬럼명 >=값1 AND 컬러명 <=값2
+
+			2] IN연산자
+				목록에 있는 값에 대해서 출력하기 위해  IN연산자를 사용한다.
+				IN 연산자는 OR로 연결된 논리연산자의 결합과 같다.
+
+			3] LIKE연산자  
+				  검색 스트링 값에 대한 와일드 카드 검색을 위해서 LIKE연산자를 사용한다.
+				   % : 임의의 0개 이상의 문자열
+				   _  :  임의의 한 글자
+				
+
+				LIKE 'A%':컬럼이 'A'로 시작하는 데이터들만 검색됩니다.
+                                          					ABC,A123,A     
+				LIKE '%A':컬럼이 'A'로 끝나는 테이터들만 검색됩니다.
+                                          					 BCA,123A,A   
+				LIKE '%KIM%':컬럼에 'KIM' 문자가 있는 데이터 들만 검색됩니다.	
+					ABCKIM	,ABCKIMDEF,KIMABC	,KIM
+				LIKE '_A%':컬럼에 'A'문자가 두 번째 위치한 데이터 들만 검색됩니다
+					 DA(O),DDDA(X),A(X)
+
+
+				컬럼명 LIKE 으로 검색
+
+			4] IS NULL연산자
+
+				NULL값은 값이 없거나 ,알 수 없거나,적용할 수 없다는 의미이므로 NULL값을
+				조회하고자 할 경우에 사용한다.
+				-NULL은 이용할 수없고 할당되지 않고 알려져 잇지 않고 적용 불가능한 값을 
+				 의미한다.
+				-NULL이란 0이나 공백(SPACE)와 다르다.
+				-NULL값을 포함한 산술 표현식 결과는 NULL이다.
+				 컬럼에 데이터 값이 없으면 그 값 자체가 NULL이다.
+
+
+
+
+	7. ORDER BY절
+
+		  질의 결과에 반환되는 행의 순서는 정의되지 않는다.
+		  ORDER BY절은 행을 정렬하는 데 사용한다. ORDER BY절을 사용하는 경우
+		  SELECT문의 맨 뒤에 기술 되어야 한다.
+		  
+		  Order BY 컬럼 내지 표현식 [ASC|DESC]
+
+		  -디폴트 정렬은 오름차순이다.
+		  -내림 차순으로 정렬하려면 ORDER BY절에서 열 이름 뒤에 DESC 키워드를 명시
+		   해야한다.
+		 
+		 
+		  -하나 이상의 열로 질의 결과를 정렬할 수 있다.
+		  -주어진 테이블에 있는 컬럼 개수까지만 가능하다
+		  -ORDER BY절에서 열을 명시하고, 열 이름은 콤마(,)로 구분한다,
+
+
+
+	8.그룹함수
+		
+		COUNT(*): 테이블의 전체  레코드 개수를 가져온다
+		예) SELECT COUNT(*) FROM 테이블명
+		AVG(컬럼명): 해당 컬럼의  전체 평균값을  구한다.
+		예) SELECT AVG(컬럼명) FROM 테이블명
+		MAX(컬럼명): 해당 컬럼의 가장 큰 값을 구한다.
+		예) SELECT MAX(컬럼명) FROM 테이블명
+		MIN(컬럼명): 해당 컬럼의 가장 작은 값을 구한다
+		예) SELECT MIN(컬럼명) FROM 테이블명
+		SELECT SUM(컬러명) FROM 테이블명:=>합계 구하기
+
+		*그룹함수는 SELECT절에서 단독으로 쓸 수 있으나
+		  다른 칼럼정보를 함께 출력할 수 없다.
+
+
+	9. GROUP BY
+     
+		-GROUP BY는 ORDER BY전에 기술해야 한다.
+		-그룹에 대한 조건은 HAVING절에서 기술해야 한다.
+		-WHERE조건과 함께 쓰면 WHERE조건절에서 먼저 필터링 한후 그룹화 한다.
+		Group by 구문:
+		GROUP BY 행을 그룹화 하기위한 기준이 될 Column을 기술
+		[HAVING 그룹에 대한 조건]
+
+
+	10. 조인문
+		1]INNER JOIN
+		-두개 이상의 테이블로부터 자료를 검색하기 위해서 join을 사용한다.
+		 일반적으로 primary key와 foreign key을 사용하여 join 하는 경우가 대부분
+
+		-가장 많이 사용되는 조인문으로 테이블 간에 연결 조건을 모두 만족하는 행을 검색하는데 
+		 사용한다.
+		 검색시 검색되는 컬럼이 조인하는 테이블 모두에 존재한다면 반드시 컬럼명에
+		 테이블 이름을 "테이블명.컬러명" 의 형태로 기술해야 한다.
+		 
+		-INNER JOIN은 자식테이블(FK가 있는 테이블)을 기준으로 모든 데이타를
+		가져온다. 예를들면  자식테이블에 전체 레코드가 10개이면
+		INNER JOIN한 결과의 레코드 수는 10개이다.
+
+		 사용구문:
+
+		    [두개 테이블 조인]
+		     -표준 SQL식 INNER JOIN
+
+		     SELECT 컬럼명…..
+		     From 테이블명1 [INNER] JOIN 테이블명2 (생략하면 무조건 INNER JOIN)
+		     ON  테이블명1.PK컬럼명 = 테이블명2.FK컬럼명
+
+		     혹은 (오라클식 INNER JOIN)
+
+		     SELECT 컬럼명…..
+		     From 테이블명1 ,테이블명2 
+		     WHERE 테이블명1.PK컬럼명 = 테이블명2.FK컬럼명
+
+		     [세개 이상의 테이블 조인]
+		    
+		    ※각 테이블간의 관계(부모-자식)를 먼저 파악해야 한다.
+
+		     -표준 SQL식 INNER JOIN
+	
+		    가정] 테이블명1는 부모고 테이블명2은 자식
+		             테이블명2는 부모고 테이블명3는자식
+			     테이블명1과 테이블명3는 부모자식관계가 아님
+
+
+		     SELECT 컬럼명…..
+		     From 테이블명1 [INNER] JOIN 테이블명2 
+		     ON  테이블명1.PK컬럼명 = 테이블명2.FK컬럼명
+		     INNER JOIN 테이블명3
+		     ON  테이블명2.PK컬럼명 = 테이블명3.FK컬러명
+
+		       혹은 (오라클식 INNER JOIN)
+
+		     SELECT 컬럼명…..
+		     From 테이블명1 ,테이블명2,테이블명3 
+		     WHERE 테이블명1.PK컬럼명 = 테이블명2.FK컬럼명 AND 테이블명2.PK컬럼명 = 테이블명3.FK컬러명
+			
+
+
+		 ※INNER JOIN ~ON을 사용하는 경우
+		    WHERE절 사용시 WHERE절은 ON다음에 기술해야 한다.
+
+		    또한 조인시 WHERE절에 찾는 조건을 기술해도 되지만
+		    조인시 ON절에 찾는조건을 AND로 추가해서
+		    조인시부터 필터링 할 수 있다.
+
+		    예]
+			
+			SELECT E.ENAME ,E.SAL,D.DNAME,D.LOC,D.DEPTNO
+			FROM EMP E INNER JOIN DEPT D
+			WHERE SAL >=3000
+			ON E.DEPTNO = D.DEPTNO    ---->에러
+
+			조인시 찾는 조건 추가하는 방법 1]
+			SELECT E.ENAME ,E.SAL,D.DNAME,D.LOC,D.DEPTNO
+			FROM EMP E INNER JOIN DEPT D			
+			ON E.DEPTNO = D.DEPTNO 
+			WHERE SAL >=3000
+		
+			조인시 찾는 조건 추가하는 방법 2]
+
+			SELECT E.ENAME ,E.SAL,D.DNAME,D.LOC,D.DEPTNO
+			FROM EMP E INNER JOIN DEPT D			
+			ON E.DEPTNO = D.DEPTNO  AND SAL >=3000
+			
+
+		※테이블에 별칭 부여
+
+		-테이블에 별칭을 부여하여 긴 테이블 명을 간단하게 사용한다.
+		-테이블 이름대신에 별칭을 사용한다.
+		-SQL코드를 적게 사용하여 코딩 시간이 절약되고 메모리를 보다 적게 사용한다.
+		-테이블 별칭은 30자까지 사용 가능하지만 짧을수록 좋다.
+
+		테이블명 별칭[o]		
+		테이블명 as 별칭[x]:as는 사용불가
+		
+
+		2]OUTER JOIN
+
+		OUTER JOIN은 INNER JOIN과는 달리 두 테이블에 조인 조건이 정확히 일치 하지 않더라도
+		어느 한쪽 테이블에서 결과값을 모두 가져오는 JOIN문이다.
+		OUTER JOIN문을 사용할때는 반드시 OUTER 전에 데이터를 어느 쪽 테이블에서 
+		가져올지 즉 왼쪽인지(LEFT) 오른쪽인지(RIGHT) 아니면 양쪽 테이블(FULL)인지 
+		반드시 기술해야 한다.
+
+			-LEFT OUTER JOIN
+			
+				JOIN문 왼쪽을 중심으로 왼쪽에 있는 테이블에서 데이터를 모두 가져온다.
+
+				 사용구문:
+		   
+				     SELECT 컬럼명…..
+				     From 테이블명1  LEFT OUTER JOIN 테이블명2 
+				     ON 조인 조건
+
+			-RIGHT OUTER JOIN
+	
+				JOIN문 오른쪽을 중심으로 오른쪽에 있는 테이블에서 데이터를 모두 가져온다.
+
+
+				     SELECT 컬럼명…..
+				     From 테이블명1  RIGHT OUTER JOIN 테이블명2 
+				     ON 조인 조건
+
+			-FULL OUTER JOIN
+			
+				JOIN문 양쪽에 있는 모든 테이블에서 데이터를 모두 가져온다.
+
+				     SELECT 컬럼명…..
+				     From 테이블명1  FULL OUTER JOIN 테이블명2 
+				     ON 조인 조건
+
+
+	11. 서브쿼리(SUBQUERY)
+
+		  -서브쿼리는 다른 하나의 SQL문장안에 기술된 SELECT문장을 말한다.
+
+		  -서브쿼리는 괄호로 묶어야 한다.
+
+		  -서브쿼리만을 단독 실행시 실행이 되어야 한다.
+
+		  -두 종류의 연산자가 서브쿼리에 사용된다.
+
+		   =,>,>=,<,<=,<>,!=(단일행 연산자)  혹은 IN, NOT IN(복수행 연산자)등
+		 
+		  -서브퀴리는 연산자의 오른쪽에 기술 되어야 한다.
+		 
+		  -단일행 서브 쿼리에는 단일행 연산자를 다중행 서브쿼리에는 복수행 연산자를 사용한다
+
+		  -서브쿼리는 SELECT절,FROM절 WHERE절등에 위치할 수 있다.
+
+
+		예]
+		-평균 급여보다 많이 받는 사람.
+
+		SELECT  * 
+		FROM EMPLOYEES
+		WHERE
+			SALARY > (SELECT AVG(SALARY) FROM EMPLOYEE) 
+			
+		-직무별 가장 많은 급여를 받는 사람
+		
+		
+		
+		
+		
+		
+		SELECT EMPLOYEE_ID,LAST_NAME,JOB_ID,SALARY
+
+		FROM EMPLOYEES
+
+		WHERE (JOB_ID,SALARY) IN (
+									SELECT JOB_ID, Max(SALARY) 
+									FROM EMPLOYEES
+									GROUP BY JOB_ID
+								   )
+
+		예]
+		각 메모글에 따른 댓글 수 구하기
+		SELECT 
+			MTITLE,
+			MWRITER,
+			MCONTENT ,
+			(SELECT COUNT(*) FROM COMMENTTBL WHERE MIDX=M.MIDX) AS COUNT,
+			MIDX 
+		FROM MEMO M;
+
+[TOP쿼리]
+	LIMIT는 SQL에서 쓰이는 키워드
+
+	
+	- 얻어진 질의 결과에서 위에서부터 순서대로 몇 개만 가져오는 경우에 사용함
+	
+	- 데이타가 입력된 순서대로 혹은 
+	  서브퀴리에 의해 생성된 테이블에 레코드가 생성된 순서대로 
+	  내부적으로  번호가 순차적으로 부여되고 그 부여된 번호는 
+	  ROWNUM이라는 컬럼에 내부적으로 저장되어 있다.
+
+	-서브쿼리 이용		
+
+		- 위에서 부터 3개
+
+		Select  * From  (
+ 			Select  *   From 테이블명 Order By PK컬럼명 Desc
+		) 
+		Where rownum <= 3 ORDER BY PK컬럼명 Desc;
+
+
+	- **특정 구간에 있는 레코드 (Between A and B 이용)
+
+		SELECT * 
+		FROM 
+			( 
+			  Select a.*,rownum num -서브쿼리
+				FROM (
+					Select * from employees order by salary desc(서브쿼리안의 서브쿼리)
+				) a
+			)  
+		WHERE num between 11 and 20
+
+		STEP1] 서브쿼리안의 서브쿼리는 특정 컬럼(보통 PK컬럼)으로 ORDER BY DESC
+		              그리고 생성된 테이블 별칭을 부여
+	
+	        STEP2] 서브쿼리안의 SELECT절에서 STEP1의 별칭.*,ROWUNUM 컬럼별칭
+		             을 기술한다
+
+		STEP3] 밖의 WHERE절에서 ROWNUM을 별칭한이름으로 between a and b한다.
+		
+	
+[테이블 생성]
+
+	1. 생성 방법
+
+	CREATE TABLE  테이블명(
+		컬럼명1  자료형1 [NOT NULL]  :제약조건(,(콤마)로 구분해서 계속 기술)
+	,	컬럼명2  자료형2 [NOT NULL] 
+	,       ------------------
+	       컬럼명N 자료형N
+	 [,PRIMARY KEY (칼럼명)] - 테이블 하나당 프라이머리 키 꼭있어야함
+	)
+
+	2. 테이블 이름 및 컬럼 명명규칙
+
+		-문자로 시작한다
+		-30자 이내로 지정 한다
+		-동일한 이름을 사용할 수없다 또한 예약어도 사용할 수 없다
+		-대소문자를 구별하지 않는다
+	
+	3. 테이블 생성시 제약 조건
+
+		기본 키(Primary Key) : 
+				-참조무결성을 유지하기 위한 제약조건이다
+				-하나의 데이블에는 하나의 PK만 존재한다.
+				-PK로 설정되면 그 컬럼은 값이 중복되거나 NULL을 허용하지 않는다.
+
+		NOT NULL : NULL값(값이 없는)을 절대로 허용하지 않는 컬럼(column)을 의미한다.
+
+		UNIQUE: 
+			값의 중복을 허용하지 않는다. NULL은 허용한다(여러번).
+
+		DEFAULT:
+			DEFAULT는 데이터 입력시 
+			해당 컬럼에 아무값도 입력하지 않았을 때 자동적으로
+			입력해주는 값이다.
+			(제약명을 지정할 수없다)
+
+
+		FOREIGN KEY:외래키로 참조무결성을 유지하기 위한 제약조건이다.
+
+
+		CHECK: DOMAIN무결성을 유지하기 위한 제약으로 해당 컬럼에 잘못된 데이터가
+		       입력 되지 않도록 유지하기 위한 제약조건이다.
+		       제약 조건은  QUERY조건과 동일하게 주면 된다
+
+		       혹은 함수 이용 
+		       예]
+			CHECK(regexp_like(컬럼명,'^[a-zA-Z]{3,10}|([1-9]{2,3})$'))
+				^ : 시작  // $ : 끝
+					
+					
+					
+			CHECK(regexp_like(컬럼명,'^[0-9]{6}-[0-9]{7}$')) :
+			0에서 9중 하나의 숫자로 시작하고 총 13자
+			CHECK(regexp_like(컬럼명,'^S.{4}$')) :S로 시작하고 4글자
+			단,regexp_like함수는 select regexp_like from dual로 실행 안됨 반드시 
+			where절에서 사용
+			
+			
+			[패턴을 표현하는 문자]
+
+			. : 임의의 한글자를 의미
+			예) a.b(acb,afb........)  
+			*  :  * 바로 앞의 문자가 없거나 한 개 이상이 있을 경우
+			예) a*b (b,ab,aab,aaab....)
+			+ : +바로 앞의 문자가 최소 한개 이상일때
+			예) a+b (ab,aab,aaab...)
+			? : ?바로 앞의 문자가 없거나 한 개 존재하는 경우
+			예) a?b (b,ab,)
+			^ : ^ 뒤에 문자열과 같은 문자열로 시작하는 경우 
+			      즉 문자열의 시작을 의미
+			    [ ]안에서 ^ 는 [ ]안의 문자를 제외한 문자를 의미
+			예) ^ab(ab,abc,abdr...)
+			$ : $앞의 문자열과 같은 문자열로 끝나는 경우 즉 문자열의 끝을 의미
+			예) ab$ (avab,aab,abab...)
+
+			[] : []안에 문자열중에 하나만의 문자만을 의미
+			예) [a-z](a부터 z까지중 한 문자)  
+			    [0-9](0부터 9까지 숫자중 한 문자)
+			 [abc](a혹은 b혹은 c)
+
+			{} :{}앞의 문자열의 개수를 의미 문자{최소개수,최대개수}
+			    최소개수는 반드시 있어야하고 최대개수가 없는경우는 1개또는 1개이상을 의미
+			 하고 숫자 하나만을 적어 주엇을때는 그 숫자만큼의 개수를 의미한다.
+
+			예) abc{1,2} (abc,abcc)
+			    a{3} (aaa)
+			 a{1,} (a,aa,aaa....)
+
+			 | : or 연산자
+
+			 [^ ] : []안의 문자는 사용 못한다는 의미
+
+			예) [^abc] (a나 b나 혹은 c를 포함하지 않은 한 문자)
+			    [^0-9] (0에서 9까지의 숫자를 포함하지 않은 한 문자)
+
+
+
+		PRIMARY KEY 예]
+
+
+		방법1) 
+			CREATE TABLE 테이블명(
+				컬럼명1  자료형1 [CONSTARINT PK제약명]  PRIMARY KEY   ->컬럼명1을 기본키로 설정함
+			,                
+				
+			컬럼명N 자료형N 
+			)
+		방법2) 
+			CREATE TABLE 테이블명(
+				컬럼명1  자료형1  NOT NULL
+			,        컬럼명N 자료형N
+			,		PRIMARY KEY(컬럼1,컬럼2)
+
+
+		FOREIGN KEY 예]
+		
+		방법1)
+			CREATE TABLE 테이블명(
+			컬럼명1  자료형1 PRIMARY KEY   
+			,	컬럼명2  자료형2  [CONSTRAINT 제약조건명] REFERENCES 부모테이블(부모테이블의 PK컬럼)  
+			,       ------------------
+			       컬럼명3 자료형3 [CONSTRAINT 제약조건명] REFERENCES 부모테이블2(부모테이블2의 PK컬럼)  
+			       컬럼명N 자료형N 
+			)
+		방법2)
+			CREATE TABLE 테이블명(
+			컬럼명1  자료형1 PRIMARY KEY   
+			,	컬럼명2  자료형2 
+			,       ------------------
+			       컬럼명N 자료형N ,
+		               [CONSTRAINT 제약조건명] FOREIGN KEY(컬러명2) REFERENCES 부모테이블(부모테이블의 PK컬럼) 
+
+			)
+
+		*FOREIGN 생성시 부모의 컬럼과 자료형이 일치해야 한다.
+                *FOREIGN KEY 생성시  ON DELETE CASCADE 혹은 ON DELETE SET NULL조건을
+		                                추가할수 있다. 
+						단, ON UPDATE CASCADE는 없음(오라클에서)
+
+		예] 
+			컬럼명2  자료형2  REFERENCES 부모테이블(부모테이블의 PK컬럼)  
+			ON DELETE CASCADE  (부모 레코드 삭제시 자식까지 삭제됨)
+			혹은
+
+			CONSTRAINT 제약조건명 FOREIGN KEY(컬러명2) 
+			REFERENCES 부모테이블(부모테이블의 PK컬럼) 
+			ON DELETE SET NULL(부모 레코드 삭제시 자식레코드값이  NULL로 설정됨)
+
+
+		
+		기타 제약 조건 예]
+
+			CREATE TABLE 테이블명(
+				컬럼명1  자료형1  NOT NULL CHECK(컬럼명1 IN ('M','F'))  -->CHECK제약
+			,	컬럼명2  자료형2 UNIQUE ->컬럼명2를 UNIQUE 설정함
+			,       ------------------
+			       컬럼명N 자료형N   DEFAULT(값) 
+			)
+
+		* 모든 제약조건에 이름을 부여 할 수 있다.(단,DEFAULT제약조건은 제외)		 
+
+				CONSTRAINT 제약조건명 제약조건
+			
+	
+		*제약조건명 볼때
+		SELECT * FROM user_cons_columns
+
+		select table_name,constraint_name from user_constraints
+			
+
+				
+[테이블 변경]
+
+
+	1. 기존 테이블의 구조 와 내용을 그대로 복사하기
+		CREATE TABLE 새 테이블명
+		AS 
+		SELECT  * FROM 기존 테이블명;
+
+		※테이블 구조와 데이타는 그대로 복사되지만
+		  제약조건 (PK,FK,UNIQUE등)은 복사가 안된다.
+
+	2. 새로운 컬럼 및 제약조건 추가 
+
+		ALTER TABLE 테이블명 ADD 컬러명 자료형 NOT NULL
+	
+		*NOT NULL제약 조건이 있는 컬럼을 추가 하려면 
+		 테이블에 데이타가 비어 있어야 함
+
+		ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건
+		예]
+		ALTER TABLE EMP ADD CONSTRAINT FK_DEPTNO_EMP FOREIGN KEY(DEPTNO)
+		REFERENCES DEPT(DEPTNO) ON DELETE CASCADE
+		ALTER TABLE EMP ADD CONSTRAINT CHK_DEPTNO_EMP
+		CHECK(DEPTNO >=100 AND DEPTNO <=200)
+
+	3. 기존 컬럼 및 제약조건 삭제  
+
+		ALTER TABLE 테이블명 DROP COLUMN 컬럼명
+
+		ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
+
+		*제약 조건은 수정이 불가 고로 삭제후 다시 ADD를 통해서 추가해야 함
+
+	4. 컬럼 속성 변경
+		
+		--데이타 타입 변경
+
+		ALTER TABLE 테이블명 MODIFY 기존필드명 새로운 필드타입
+
+		*기존 컬럼을 새로운 데이타 타입으로 변경하려면 
+		 테이블에 데이타가 비어 있어야 함.
+
+		*기존 자료형보다 큰 자료형으로 수정은 상관없으나
+		 작은 자료형으로 수정할 경우 기존의 저장된 데이타가
+		 작은 자료형보다 자리수가 크다면 에러
+		
+		--컬럼명 변경
+
+		ALTER TABLE 테이블명 RENAME COLUMN 기존 컬럼명 TO 새로운 컬럼명
+
+
+
+	5. 테이블 이름 변경
+
+		RENAME 기존 테이블명 TO 새로운 테이블명
+
+
+[테이블 삭제]
+
+	
+	DROP TABLE 테이블명 :테이블이 삭제 된후 휴지통에 들어감
+
+	DROP TABLE 테이블명 PURGE:테이블 삭제시 휴지통에 안놓고 완전삭제
+
+	FLASHBACK TABLE 테이블명 TO BEFORE DROP:휴지통에 들어간 테이블 복원시
+
+	SHOW RECYCLEBIN:휴지통 내용보기
+
+	PURGE RECYCLEBIN:휴지통 비우기
+
+	PURGE TABLE 테이블명:휴지통에 들어간 특정 테이블 완전삭제
+
+
+	DROP TABLE 부모테이블 CASCADE CONSTRAINT:
+				자식이 참조하더라도 강제 삭제하는 경우
+	                        단, 자식은 삭제 안됨
+
+	
+
+
+
+[시퀀스]
+	-테이블의 필드에 일련번호 부여
+	-테이블 생성 후 시퀀스(일련번호)를 따로 만들어야 한다.
+
+       ※시퀀스를 모른다고 가정할때 일련번호의 데이타를 입력하는 방법
+         INSERT INTO 테이블명(일련번호컬럼) VALUES((SELECT MAX(일련번호컬럼)+1 FROM BOARD));
+	시퀀스구문]
+
+		-시퀀스 생성 SQL 구문
+		
+			CREATE SEQUENCE 시퀀스명
+			[INCREMENT BY 증가값]
+			[START WITH SEED값] 
+			[MAXVALUE n| MINVALUE n] //시퀀스 최대/최소값 지정
+			                           minvalue의 디폴트 값 1
+						   maxvalue의 디폴트값 1.0000E+28
+
+			[CYCLE|NOCYCLE]  //최대 또는 최소값에 도달한 후 계속 값을 
+			                  생성할 지 여부 지정(디폴트는 NOCYCLE)
+			[CACHE/NOCACHE] //CACHE메모리에 오라클 서버가 SEQUENCE값을 
+			                  할당하는가 여부 지정(디폴트로 CACHE]
+
+			
+			※START WITH 에 MINVALUE 보다 작은 값은 지정할 수 없다.
+			  즉 START WITH값은 MINVALUE와 같거나  MINVALUE보다 커야 한다
+			  
+			 ※NOCYCLE로 설정하고 시퀀스를 계속 얻어 올때
+			    MAXVALUE에 지정한 값을 초과하면 아래와 같은 에러발생
+			   시퀀스명.NEXTVAL exceeds MAXVALUE은 사례로 될 수 없습니다.
+
+			*PRIMARY KEY에 CYCLE옵션지정하면 안됨.
+
+		-NEXTVAL:다음의 일련번호 값을 반환
+
+
+		-CURRVAL: 현재의 일련번호 값을 반환
+
+
+		-NEXTVAL과 CURRVAL을 사용할 수 있는 구문
+
+			SUBQUERY가 아닌 SELECT문
+			INSERT문의 VALUES절
+			UPDATE문의 SET절
+
+			※같은 절 안에서 NEXTVAL을 여러번 사용해도 값은 같다
+
+		-NEXTVAL과 CURRVAL을 사용할 수 없는 구문
+
+			-VIEW문의 SELECT문
+			-DISTINCT를 사용한 SELECT문
+			-GROUP BY,HAVING,ORDER BY를 이용한 SELECT문
+
+		사용예]
+
+			-시퀀스 생성
+
+				CREATE SEQUENCE dept_deptno
+				INCREMENT BY 1
+				START WITH 50
+				MAXVALUE 99
+				NOCACHE
+				NOCYCLE
+			-해당 컬럼에 값 입력
+
+				INSERT INTO dept VALUES(DEPT_DEPTNO.NEXTVAL,'영업부','서울');
+
+			-현재 시퀀스 값 얻기
+
+				SELECT DEPT_DEPTNO.CURRVAL FROM DUAL;
+
+
+		-시퀀스 수정
+
+			ALTER SEQUENCE 시퀀스명
+			[INCREMENT BY 증가값]			
+			[MAXVALUE n| MINVALUE n] 
+			[CYCLE|NOCYCLE]  
+			[CACHE/NOCACHE] 
+
+			*START WITH N은 수정 못함
+
+		
+		-시퀀스 삭제
+
+			DROP SEQUENCE 시퀀스명
+
+
+
+
+		*DUAL :출력을 위한 임시 테이블로 모든 사용자 계정이
+                       가질 수 있다.
+
+	  ※CREATE SEQUENCE 시퀀스명
+         MAXVALUE 10
+		 CYCLE;
+		 실행시에
+		 "CACHE 에는 1 사이클보다 작은 값을 지정해야 합니다" 에러발생
+		 왜냐하면 할당 가능한 값이 1에서 10까지 10개인데 CACHE의
+		 기본값은 20개임으로  생성 실패한다.
+		 해결책: 
+		 1. CACHE 를 10미만값으로 설정하거나
+		     CREATE SEQUENCE 시퀀스명
+             MAXVALUE 10
+			 CACHE 9
+		     CYCLE;
+		 2. NOCACHE로 설정하거나 혹은 NOCYCLE로 설정한다
+		     CREATE SEQUENCE 시퀀스명
+             MAXVALUE 10
+			 [NOCACHE]
+		     NOCYCLE;
+		
+
+		       단, 실행결과 하나의 컬럼으로만 나오는 SELECT문 사용시 값을
+                       확인 하고자 할때 사용하는 유용한 임시 테이블이다.
+
+		*SELECT * FROM USER_SEQUENCES
+
+		
+
+		* 11g에서 2부터 입려되지 않고 1 부터 입력되도록
+		   10g는 상관없음
+
+		1. sysdba로
+		     sql>conn / as sysdba
+		
+		2.   sql> Alter system set deferred_segment_creation=false;
+
+		3.  sql>shutdown immediate
+
+		4. sql> startup
+
+		5. sql> conn green/green
+
+		6. 시퀀스 생성후 새로 생성한 테이블에 insert
+
+
+
+
+[데이터 입력]
+
+	-데이터 입력을 위한 SQL구문 작성시 문자형(CHAR혹은 VARCHAR2등)은 반드시 '(작은따옴표)로 값을 감싸야 한다. 
+	 숫자형은 작은따옴표가 필요없다.
+
+	1.입력방법 첫번째  SQL구문
+
+	INSERT INTO  테이블명(컬럼명1,컬러명2,---------,컬러명N)
+	VALUES(값1,값2,---------------,값N)
+
+	2.입력방법 두번째  SQL구문
+
+	INSERT INTO  테이블명
+	VALUES(값1,값2,---------------,값N)
+
+	※ 컬럼에 NULL삽입시: '' 혹은 NULL
+	   디폴트 제약조건을 준 컬럼에 DEFALUT값 삽입시:DEFAULT
+           예)
+	   INSERT INTO  테이블명
+	VALUES(값1,값2,NULL,DEFAULT)
+
+[데이터 수정]
+	
+	-SQL구문
+
+	UPDATE 기존테이블명
+	SET 컬럼명 = 새로운값
+	[WHERE 업데이트 조건]
+
+[데이터 삭제]
+
+	-SQL구문
+
+	DELETE [FROM] 기존테이블명
+	[WHERE 삭제 조건]
+
+
+	*TRUNCATE TABLE 테이블명:기능은 DELETE FROM 테이블명과 같다 
+                                 즉 테이블안에 있는 모든 데이타를 삭제한다.
+				
+         차이점:DELETE FROM은 ROLLBAKC을 위해 ROLLBAKC로깅정보를 남기지만
+                TRUNCATE TABLE은 ROLLBACK을 위한 로깅정보를 남기지 않느다.
+
+                고로 대용량의 데이타(테이블에 백만개의 레코드)를 한번에 삭제시에
+                TRUNCATE가 속도면에서 빠르다.
+                DELETE FROM을 사용하면 Oracle서버가 다운 될 수도 잇다.
+
+
+		단, TRUNCATE TABLE은 ROLLBACK이 안되기 때문에 삭제하면 
+                복원이 불가능함으로 항상 조심해라
+
+		TRUNCATE는 테이블 삭제후 다시 삭제된 테이블과 
+		같은 구조로 다시 생성하는것임.
+         
+			
+
+
+
+[VIEW]
+
+	- VIEW는 하나 또는 그 이상의 테이블로부터 생성된 가상의 테이블이다. 
+	- 물리적으로 존재하지 않는 테이블
+	- 데이타베이스의 선택적인 내용을 보여줄 수 있기때문에 데이타베이스에 대한 액세스 제한 가능
+	- 복잡한 질의어를 통해 얻을 수 있는 결과를 간단할 질의어를 써 구할 수 있다.
+
+	- 하나의 테이블로 만든 VIEW에서는 DML(INSERT,DELETE,UPDATE)문장을 수행 할 수 있지만 
+	  여러 테이블로 만든 VIEW(PK와 FK로 조인한)에서는
+	  DML문(INSERT)을 수행 할 수 없다,단,UPDATE와 DELETE는 가능.
+
+	 - VIEW생성시 ORDER BY를 포함 할 수 없다(ORACLE 8i이전버전까지)
+
+	 
+
+
+	-VIEW의 장점
+	(1)보안성 - 중요한 컬럼을 숨 길수 잇어 보안을 유지 할 수 있다.
+	(2)편의성 - 여러 개의 테이블 사용을 위해 복잡한 조인이 사용되었다 하더라도 사용자는 이를
+		    몰라도 된다.
+	(3)간결성 - 뷰를 사용하면 APPLICATION을 개발할 때 복잡한 쿼리문을 숨길 수 있어 소스가
+		   간결해 진다.
+
+
+	-VIEW생성 구문 형식
+
+		CREATE  [ OR REPLACE] VIEW VIEW명[(컬럼별칭1,컬럼별칭2...)]  
+		//별칭 부여시 "" 로 감싸줘라
+		
+		AS
+
+		SELECT  구문		
+		[WITH READ ONLY]  --뷰를 읽기전용으로 만들때
+
+	-VIEW의 수정 
+		OR REPLACE 사용:이미 존재한다면 다시 생성
+
+	
+	
+	-VIEW의 삭제
+	
+		DROP VIEW VIEW명
+
+	* 생성한 VIEW 정보 보기
+
+	SQL>SELECT VIEW_NAME,TEXT FROM USER_VIEWS;
+
+INDEX OF BOOK
+[인덱스(INDEX)]
+
+	- 행의 검색 속도를 향상 시킬 수 있는 개체
+	- 인덱스를 명시적(CREATE INDEX) 또는 
+	  자동적으로(PRIMARY KEY,UNIQUE KEY)로 생성 할 수 있다.
+	- 컬럼에 대하 인덱스가 없으면 한 테이블 전 체를 검색. 
+	   즉 인덱스는 쿼리의 성능을 향상 시키는 것이 목적
+	- INSERT/UPDATE/DELETE 가 많은 컬럼에 대해서 
+	   INDEX를 되도록이면 설정하지 말아라
+	- 인덱스가 많은 것이 항상 좋은 것은 아니다 
+	  왜냐하면 인덱스를 가진 테이블에 대한 DML작업 은 인덱스도
+	  갱신되어야 함을 의미하기때문
+
+
+	 - 어느 컬럼에  인덱스를 설정하는가?
+
+		1.WHERE조건이나 조인 조건에서 자주 사용되는 컬럼
+		2.광범위한 값을 포함하는 컬럼		
+		3.많은 NULL값을 포함하는 컬럼
+
+		*테이블에 자료의 양이 적거나 자주 갱신되는
+                 테이블은 오히려 인덱스를 걸지 말아라
+
+
+
+	인덱스 구문 형식]
+
+		-인덱스 생성
+
+			CREATE INDEX 인덱스명 ON 테이블명(컬럼1[,컬럼2,.....]);
+
+		-인덱스 삭제
+
+			DROP INDEX 인덱스명
+
+		*인덱스는 수정 불가 수정시에는 삭제후 다시 생성
+
+		※컬럼에 설정된 인덱스 보기
+		select * from user_ind_columns
+
+
+[사용자 생성및 권한]	
+
+	-아래 작업은 DBA역할이 있는 최고 관리자(SYSTEM/SYS)로 접속하여야 한다.
+
+	1.사용자 생성 및  암호 설정
+
+		
+		CREATE USER 아이디 IDENTIFIED BY 암호
+		*사용자는 생성된 후 어떠한 권한도 가지지 못한다
+
+	2.사용자에 권한 혹은 역할 부여 
+		
+		권한부여 구문]
+	       
+		Grant 시스템 권한1[,시스템 권한2,...] |[역할1[,역할2,..]  
+		To 사용자1[,사용자2,..]|[역할1[,역할2,..]
+		[WITH ADMIN OPTION] //받은 시스템 권한을 다른 사용자에게 부여 할 수 있는 권한
+
+
+	        - 사용자는 데이타베이스에 액세스하기위해 
+		   시스템 권한(SYSTEM PRIVILEGE)이 필요하고
+	           데이타베이스의 개체의 내용을 조작하기 위해 
+		   개체 권한(OBJECT PRIVILEGE)이 필요하다
+
+		- 시스템 권한의 종류는 200개 이상이고 
+		  개체권한은 28개 이다(10G버전 기준)
+
+		- 시스템 권한은 주로 DBA가 부여한다.(SYS/SYSTEM)
+
+		- DBA는 상급의 시스템권한을 부여한다
+               
+	          1.CREATE USER:사용자 생성
+		  2.DROP USER:사용자 제거
+		  3.DROP ANY TABLE:테이블 제거
+		  등
+
+
+
+	       
+
+	       -시스템 권한: 
+			SQL>SELECT * FROM SYSTEM_PRIVILEGE_MAP;
+
+			* ALTER ANY 계열: 
+				ALTER ANY TABLE,ALTER ANY PROCEDURE,ALTER ANY INDEX,
+                                    ALTER ANY USER등(자체 스키마 뿐만 아니라 모든 스키마에서)
+			  CREATE ANY 계열: 
+                             CREATE ANY TABLE,CREATE ANY PROCEDURE,CREATE ANY INDEX등
+			     (자체 스키마 뿐만 아니라 모든 스키마에서)
+			  CREATE 계열: 
+                            CREATE SESSION, CREATE TABLE,CREATE VIEW,CRETAE USER등
+			    (자체 스키마에서만)		
+		
+
+		       CREATE SESSION:접속 가능(conn 아이디/암호)
+		       CREATE TABLE:테이블 생성 권한 
+				    
+		       CREATE VIEW :뷰 생성 권한
+		       CRETAE USER:사용자 생성 권한등
+
+		-개체 권한
+			-시스템 권한을 주면 (CREATE TABLE) 
+			 자동으로 개체 권한(INSERT/SELECT/DELETE/UPDATE등이 부여 된다)
+			
+			SQL>SELECT * FROM TABLE_PRIVILEGE_MAP;
+			
+			SELECT/INSERT/UPDATE/DELETE등
+	       
+	       *역할
+	       DBA:최고 권한
+	       CONNECT:DB에 액세스 할 수 있는 권한
+	       RESOURCE:개체를 생성할 수 있는 권한 CREATE TABLE + INSERT
+
+	       
+
+
+
+	        예1]GRANT CREATE TABLE,CREATE SESSION,CREATE VIEW TO 사용자아이디 
+
+		   사용자에게 테이블을 생성하고 접속하고 VIEW를 생성할 수 있는 권한 부여
+
+		 
+		예2]GRANT CONNECT,RESOURCE TO  사용자 아이디
+
+		  사용자에게 접속 및 테이블 생성 권한 동시에 주기(VIEW생성 권한은 없음)
+
+	
+	 
+	 3. 암호 변경 및 할당량 부여
+
+	       -암호 변경
+
+		ALTER USER 사용자아이디 IDENTIFIED BY 새 암호
+		
+	       -할당량 부여
+	         
+		*CREATE TABLE권한을 GRANT 한 후에는 할당량을 부여 해야 
+		테이블을 생성할 수 있다
+		  
+		ALTER USER  사용자아이디 QUOTA  할당량 On Users;
+		예]ALTER USER  Choi QUOTA  5M On Users;
+
+		
+
+	4. 권한이 없는 다른 사용자에게 특정 테이블 조회 권한 부여하기
+
+		GRANT  SELECT ON 다른 사용자아이디.테이블 TO 사용자 아이디
+
+		예]GRANT SELECT ON SCOTT.EMP TO CHOI;
+
+		-조회하기
+		SELECT * FROM SCOTT.EMP
+
+
+
+	5.역할을 통해 권한 동시에 주기
+
+
+		1)ROLE 생성
+
+		- CREATE ROLE STAFF;//STAFF이라는 ROLE생성
+		2) ROLE에 권한 부여
+		- GRANT CREATE TABLE, CREATE VIEW TO  STAFF;
+
+		3)사용자의 ROLE  권한 부여
+		-GRANT STAFF TO 사용자1,사용자2;
+		-->사용자1,사용자2라는 사용자에 STAFF 이라는 ROLE부여.
+
+	
+	*GRANT Connect, Resource TO  사용자
+
+	     ->Connect, Resource 역할은 
+	       Create Session, Create Table권한과 테이블의  할당량을
+	       부여하는 역할
+	       단,CREATE VIEW는 할 수 없음.
+
+
+
+
+	6.권한제거
+	
+		REVOKE 권한 및 역할 FROM 사용자;
+
+		*단, WITH ADMIN OPTION으로 부여된 권한은 취소 되지 않은다.
+
+
+	7. 사용자 삭제
+
+		Drop USER 사용자 CASCADE;
+
+	*사용자 목록 보기
+	SQL> DESC DBA_USERS
+	SQL> SELECT USERNAME FROM DBA_USERS
+	*사용자가 가진 시스템권란 보기
+	SQL> DESC dba_sys_privs
+	SQL>select privilege from dba_sys_privs where grantee='USER1'
+
+	*사용자 계정 잠금 풀면서 동시에 암호변경
+	sql>alter user 사용자계정 account unlock identified by 암호
+
+	sql>alter user 사용자계정 account unlock;계정푼거
+	sql>alter user 사용자계정 identified by 암호;암호부여
+
+
+
+[PL/SQL(PROCEDURAL LANGUAGE/SQL)]
+
+	-프로그래밍 언어의 특성을 수용한 SQL의 확장.
+	-SQL의 데이타 조작(DML)과 질의문을 
+         블락 구조에 절차적 단위(IF,FOR,WHILE,LOOP등)로 된 커맨드를 포함 할 수 있으며
+	 프로그래밍을 가능하게 한 언어 이다.
+
+
+	 PL/SQL 구조]
+
+	 DECLARE
+		변수 및 상수, CURSOR,EXCEPTION선언등  //선언부-선택사항
+
+	 BEGIN
+
+		SQL,PL/SQL문;   //실행부-필수사항
+
+		EXCEPTION
+		BEGIN
+
+		에외처리 ;//예외처리부-선택사항
+
+		END;
+		
+	 END;
+	 /   ----->반드시 붙여라
+
+
+	 -PL/SQL블락내에서 한분장이 종료할때마다 세미콜론(;)을 붙인다.
+	 -END뒤에 세미콜론(;)을 붙여 하나의 BLOCK이 끝났다는 것을 명시
+	 -마지막에 반드시 / 를 붙여야 한다.
+
+	주석]
+		--:한줄 주석
+		/* 여러줄 */:여러줄 주석
+
+	 변수선언]
+         
+		변수명 [CONSTANT] 자료형 [NOT NULL] [:= 초기값 | DEFAULT 초기값 ];
+		예]
+		
+		
+		v_num NUMBER;
+		v_name VARCHAR2(10) :='홍길동';  //v_name VARCHAR2(10) DEFAULT '홍길동';
+		V_PI CONSTANT NUMBER(3,2):=3.14;
+
+		
+		
+
+		-한 라인에 하나의 식별자만 가능
+		-상수선언에서 CONSTANT는 자료형보다 먼저 기술
+		-대소문자를 구분하지 않는다.
+
+
+
+	변수에 값 할당]
+	
+		-지정 연산자(:=)를 이용해서 값 할당.
+
+		변수명 := 값;
+
+		
+		사용 예]
+	    SQL> VAR[IABLE] NUM(변수명) NUMBER(변수타입-자료형)
+		DECLARE
+			v_date DATE;
+			v_num NUMBER ;
+			v_name VARCHAR2(10);
+
+		BEGIN
+			
+			v_date := TO_DATE('2012-01-01','YYYY-MM-DD');
+			v_num:=10;
+			
+			v_name:='홍길동';
+		end;
+		/
+		※ 변수의 자료형 지정시 %TYPE을 사용하면 해당 테이블의 
+		    자료형으로 선언 한것과 같음
+
+			v_addr 테이블명.컬럼명%TYPE;
+
+			v_name emp.ename%TYPE => EMP테이블의 ENAME컬럼과 같은 자료형으로
+			                                            선언한것과 같다
+
+								    v_name  varchar2(10);
+
+
+	바인드 변수 선언]
+
+		-호스트 환경에서  선언된 변수
+		-PL/SQL 프로그램의 내부나 외부에서 전달하기 위해서 사용
+		-PL/SQL문이 프로시저나 함수 안에 잇지 않는다면 
+		 호스트에서 선언된 변수(바인드 변수)를 
+		 PL/SQL문장에서 참조 할 수 있다.
+
+		-호스트 변수와 PL/SQL내에서의 변수를 구분하기 위해 
+		 호스트 변수앞에 콜론(:)을 붙인다.
+
+		-선언만 할 수 있고 호스트 변수는 선언시에 값을 할 당 못한다.
+
+		-선언 방법
+
+		VAR[IABLE] 변수명 자료형
+
+
+		사용 예 1]
+		SQL>VARIABLE return_var NUMBER
+		SQL>DECLARE -- 선언부 없으면 생략 가능
+		 1  BEGIN
+		 2	:return_var:=300;  
+		 3   END;
+		      /
+		SQL>PRINT return_var
+		혹은
+		SQL>SELECT :RETURN_VAR FROM DUAL;
+		
+		여러개 인 경우
+		print 호스트변수1 호스트변수2 (스페이스바로 구분)
+		
+		select :호스트변수1,:호스트변수2 from dual;
+		사용 예2]
+
+		
+		SQL>DECLARE 
+		    v_name VARCHAR2(10);
+		1   BEGIN
+		2	v_name:='Hello World';
+		3   END;
+		      /
+		SQL>PRINT v_name   --블락 안에서 선언된 변수는 호스트에서 알 수 없음
+
+
+		
+
+	연산자]
+
+		-산술 연산자 : +,-,/,*
+		-비교 연산자: =,!=,<,>,<=,>=,IS NULL,BETWEEN,IN
+		-논리 연산자:AND ,OR, NOT등
+
+	
+	
+
+	PL/SQL문장 SELECT문장 사용시 주의 사항]
+
+		-SELECT 문은 하나의 행만 RETURN해야 한다. 하나이상 이거나 없을시
+		 PL/SQL은  TOO_MANY_ROWS와  NO_DATA_FOUND 예외를 발생 시킨다.
+		 여러행을 리턴시에는 CURSOR를 사용해야 한다.
+		 
+		-SELECT문장을 PL/SQL문에서 사용시에는 INTO절을 사용해야 한다.
+		-INTO절에서는 테이블의 열과 INTO절에서의 출력 변수의 수가 동일해야 한다.
+
+
+		소스 예]
+
+			
+
+			SQL>VAR e_dname VARCHAR2(14);
+			--dept.dname%TYPE; 바인드 변수는 %TYPE  선언이 불가 하다
+			SQL>VAR e_loc VARCHAR2(13);--dept.loc%TYPE
+			SQL> DECLARE
+
+				v_deptno dept.deptno%TYPE;
+			
+
+			BEGIN
+
+				v_deptno:=10;
+
+				SELECT dname,loc INTO :e_dname--,:e_loc 
+				FROM dept
+				WHERE deptno = v_deptno;
+
+			END;
+			/
+
+			결과 확인
+
+			SQL>PRINT e_dname
+			SQL>PRINT E_LOC
+
+
+
+	제어 문]
+
+
+		IF문]
+		
+			IF condition THEN
+			
+				statements;
+			
+			[ELSIF condition THEN	statements;]  --ELSIF E가 반드시 빠져야 함
+
+			[ELSE statements;]
+	
+			END IF;
+
+			
+			소스 예]
+			SQL>SET SERVEROUT ON
+			SQL>DECLARE
+			2	v_a NUMBER;
+			3	BEGIN
+			4	v_a:=10;
+			5	IF MOD(v_a,2) =0 THEN
+			6	DBMS_OUTPUT.PUT_LINE('짝수');
+			7	ELSE
+			8	DBMS_OUTPUT.PUT_LINE('홀수');
+			9	END IF;  --반드시 ;을 붙일것
+			10	END;
+			11	/         --블락을 끝내겠다는 의미
+			엔터
+
+
+
+
+		LOOP문]
+
+			LOOP
+
+				statement1;
+				statement2;
+
+				EXIT  [WHEN condition]; -> 이거 빠지면 무한루프이다
+							자바의 break;와 같다
+
+			END LOOP;
+
+
+			소스 예]
+
+			ACCEPT NUM PROMPT '숫자를 입력하세요?'
+			           10
+			DECLARE
+				HAP NUMBER :=0;	
+				MYNUM NUMBER := &NUM;		
+				10
+			BEGIN
+				LOOP
+					HAP := HAP +MYNUM;
+					           0+10 +9  +8.........1 
+					MYNUM := MYNUM-1;	
+                             				0		
+					EXIT WHEN MYNUM=0;
+				END LOOP;
+				DBMS_OUTPUT.PUT_LINE(&NUM || '까지의 누적합:' || HAP);
+			END;
+			/
+
+
+		FOR문]
+			-인덱스 카운터는 자동으로 선언된 변수
+			-FOR문은 1씩밖에 증가 못한다.	
+			-※항상 초기값이 종료값보다 작아야한다.
+			    초기값이 더 크면 반복하지 않은다
+		        예]for(int i =초기값 ; i <=종료값 ;i++)
+				reverse도 마찬가지다
+				
+			FOR 인덱스 카운터 IN [REVERSE] 초기@값 .. 종료값 LOOP
+
+				statement1;
+				statement2;
+			END LOOP;
+
+			소스 예]
+			SQL> BEGIN
+			2	FOR I IN 1..10 LOOP
+			3		DBMS_OUTPUT.PUT_LINE('I의 값은 ' || I);
+			4	END LOOP;
+			5	END;
+			6	/
+
+		※
+		DBMS_OUTPUT.PUT('줄바꿈 안하는 함수');
+		DBMS_OUTPUT.NEW_LINE;
+
+		WHILE 문]
+
+			WHILE condition LOOP
+
+				statement1;
+				statement2;
+			END LOOP;
+
+			WHILE(condition){
+
+
+			}
+	
+
+		EXIT문]
+
+			EXIT WHEN condition;
+		
+
+
+
+		사용 예1-직접 콘솔에 작성]
+
+			SQL>SET SERVEROUTPUT ON   
+			SQL>DECLARE
+			  
+			  2  v_init NUMBER:=1;
+			  3  v_end NUMBER := 10;
+			  4 BEGIN
+			  5 WHILE v_init <=v_end LOOP
+			  6 DBMS_OUTPUT.PUT_LINE(v_init);
+			  7 v_init:=v_init+1;
+			  8 END LOOP;
+			  9 END;
+			  /      -------------->반드시
+
+
+		사용 예2-메모장 이용]
+
+			1) SQL>ED mysum[엔터]
+
+			2)======아래 내용 메모장으로 작성=================
+			ED명령어로만 작성시에는 ACCEPT 명령어 사용시 에러
+            즉 ED 파일명으로 작성후 @파일명으로 실행싱에
+            ACCEPT 명령어 사용가능.
+			SET SERVEROUT ON --출력을 위한 DBMS_OUTPUT.PUT_LINE()함수를 사용하기 위한 설정 ON
+			                    --SQL>SHOW SERVEROUTPUT으로 현재 설정 샅태를 볼 수 있다.
+
+			ACCEPT p_init PROMPT ' 초기값:'
+			ACCEPT p_end PROMPT ' 종료값:'
+
+			DECLARE 
+				v_init NUMBER:=&p_init;
+				
+				--v_end NUMBER := &p_end;
+				v_sum NUMBER :=0;
+			BEGIN
+				 
+				FOR i IN v_init .. &p_end LOOP
+
+					IF MOD(i,2) = 0 THEN
+
+						v_sum:=v_sum+i;
+					END IF;
+
+				END LOOP;	
+
+				DBMS_OUTPUT.PUT_LINE(v_init || '부터' || &p_end || '까지의 합:' || v_sum);
+
+			END;
+			/            --반드시 넣어라 하나의 불락이 끝났음을 PL/SQL엔진에 알려주는 역할
+			SET SERVEROUT OFF
+
+
+
+			3)저장 후 닫는다
+
+			4) SQL>@mysum       =========>실행 하기
+
+			5) SQL>ED mysum     ====>다시 편집 하려면
+
+
+		사용예 3]
+
+			SET SERVEROUTPUT ON
+			ACCEPT p_deptno PROMPT '부서 번호를 입력하세요:: '
+			ACCEPT p_dname PROMPT '부서명을 입력하세요: '
+			ACCEPT p_loc PROMPT '지역을 입력하세요: '
+
+			DECLARE
+
+				
+				v_deptno dept.deptno%TYPE:=&p_deptno;
+				--대체되는 값임으로 반드시 타입이 문자열인 경우
+				--'으로 감싸라('&p_dname')
+				v_dname dept.dname%TYPE:= '&p_dname';
+				v_loc dept.loc%TYPE:='&p_loc';
+
+			BEGIN
+
+				INSERT INTO DEPT(DEPTNO,DNAME,LOC)
+					VALUES(v_deptno,v_dname,v_loc);
+
+				IF SQL%FOUND THEN 
+				--SQL%FOUND:가장 최근의 SQL문자이 하나 또는 
+				   그 이상의 행에 영향이 미?다면 TRUE
+				-- SQL%NOTFOUND :어떤 행에 영향을  미치지 않았다면 TRUE반환
+				--출력문에 사용불가:DBMS_OUTPUT.PUT_LINE(SQL%FOUND);//[X]
+
+					DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT || ' 개 레코드가 입력 되었습니다');
+					--SQL%ROWCOUNT:가장 최근의 SQL문장에 의해 영향을 받은 행의수
+
+				ELSE
+					DBMS_OUTPUT.PUT_LINE('입력에 실패했습니다');
+				END IF;
+
+			END;
+			/
+
+
+[예외처리]
+
+EXCEPTION: PL/SQL에서 발생하는 ERROR
+
+-ORACLE Server 에러가 발생하면 이와 관련된 EXCEPTION이 자동 발생
+
+- 예외처리 방법]
+    
+  DECLARE 
+    
+  BEGIN
+  . . . 
+       EXCEPTION
+       WHEN exception명1 THEN
+        statement1
+       WHEN exception명2 THEN
+      . statement2
+        WHEN OTHERS THEN
+      . statement3
+  END;
+
+-예외 종류]
+
+    1]PREDEFINED EXCEPTION
+    ORACLE Server 에러 중 자주 발생되는 20가지 에러에 대해 미리 정의되어 있는 EXCEPTION
+    --------------------------------+-------------------------------+----------------------------------------------
+    EXCEPTION명              |         에러번호             |                      설    명 
+    --------------------------------+-------------------------------+---------------------------------------------
+   NO_DATA_FOUND        |       ORA-01403            | 데이터를 반환하지 않은 SELECT문 
+   ---------------------------------+-------------------------------+------------------------------------------------
+  TOO_MANY_ROWS       |      ORA-01422             | 두 개 이상을 반환한 SELECT문 
+ ----------------------------------+-------------------------------+---------------------------------------------------
+  INVALID_CURSOR        |       ORA-01001            | 잘못된 CURSOR 연산 발생 
+  ---------------------------------+--------------------------------+--------------------------------------------------
+  ZERO_DIVIDE                |       ORA-01476            | 0으로 나누기 
+  ----------------------------------+-------------------------------+------------------------------------------------
+  DUP_VAL_ON_INDEX     |       ORA-00001             | UNIQUE COLUMN에 중복된 값을 입력할 때 
+  ----------------------------------+--------------------------------+-----------------------------------------------------
+  CURSOR_ALREADY_OPEN | ORA-06511               | 이미 열러 있는 커서를 여는 경우 
+  ------------------------------------+------------------------------+---------------------------------------------------
+  INVALID_NUMBER         |  ORA-01722                 | 문자열을 숫자로 전환하지 못한 경우 
+------------------------------------+-------------------------------+-----------------------------------------------------
+ PROGRAM_ERROR          | ORA-06501                 | PL/SQL 내부에 오류 
+------------------------------------+--------------------------------+--------------------------------------------------
+ STORAGE_ERROR           |  ORA-06500                  | PL/SQL에 메모리 부족 
+------------------------------------+---------------------------------+----------------------------------------------
+ VALUE_ERROR                | ORA-06502                    | 산술, 절단 등에서 크기가 다른 오류 발생 
+------------------------------------+----------------------------------+-------------------------------------------------------
+
+
+ 2] NON-PREDEFINED EXCEPTION
+
+- 사용자가 선언부에 EXCEPTION명을 정의하고 ORACLE Server에서 제공하는 
+  error번호를 사용하여 Error와 연결한 후 예외처리부에서 Error처리
+ 예]
+ DECLARE 
+    exception명 EXCEPTION;
+    PRAGMA EXCEPTION_INIT(exception명, 에러번호);
+   BEGIN
+  . . . 
+   EXCEPTION
+   WHEN exception명 THEN
+  . . . 
+  END;
+
+  예]
+  Ex)
+
+CREATE OR REPLACE PROCEDURE 프로시저명(매개변수)
+
+IS
+
+ 사용자정의예외명        EXCEPTION;
+
+  PRAGMA           EXCEPTION_INIT(사용자정의예외명 ,에러번호);
+
+BEGIN
+  실행명령문
+   COMMIT;
+
+EXCEPTION
+
+  WHEN 사용자정의예외명 THEN
+
+    ROLLBACK;
+
+    DBMS_OUTPUT.PUT_LINE('에러메시지');
+
+END;
+
+3] USER DEFINE EXCEPTION
+
+- 사용자가 정한 조건이 만족되지 않을 때, Error를 발생
+ DECLARE 
+  exception명 EXCEPTION;
+  BEGIN
+  RAISE exception명 ;
+  . . . 
+  EXCEPTION
+  WHEN exception명 THEN
+  . . . 
+  END;
+
+예]
+CREATE OR REPLACE PROCEDURE 프로시저명(매개변수)
+
+
+IS
+사용자정의예외명        EXCEPTION;
+
+BEGIN
+
+ 실행부
+
+ IF  조건 THEN
+
+  실행부
+
+ ELSE
+
+  RAISE  사용자정의예외명;
+
+ END IF ;
+
+EXCEPTION
+
+WHEN 사용자정의예외명 THEN
+
+  DBMS_OUTPUT.PUT_LINE ('에러메시지') ;
+
+END;
+
+4] SQLCODE, SQLERRM
+
+- 일반적인 Error 처리를 위하여 Oracle에서 제공하는 함수
+
+- SQLCODE: ORACLE에서 지정된 Error Code를 숫자로 Return  (0:success)
+
+- SQLERRM: ORACLE에서 지정된 Error Code에 해당하는 Error Message를 Return
+
+
+
+[트랜잭션]
+
+	- @일련의 작업 처리 단위를 하나의 트랜잭션이라 한다.
+
+	- 일련의 작업에서 하나의 작업이라도 실패한다면 모든 작업을 취소시킨다
+		(ROLLBACK 한다고 한다)
+
+	- 일련의 작업이 정상적으로 끝나면 COMMIT한다
+
+	- 오라클의 트랜잭션 제어 명령어
+
+	    COMMIT:모든 미결정 데이타를 영구적으로 변경함으로써 
+	                 현재 TRANSATION을 종료
+	    ROLLBACK [TO SAVEPOINT name]:모든 미결정 데이터 변경을 원래대로 돌림으로써 
+	                                                    현재의 TRANSATION종료
+	    SAVEPOINT :TRANSATION내의 SAVEPOINT표시/ANSI 표준 SQL이 아님.
+
+	- 자동 COMMIT일 얼어나는 경우
+
+		1.DDL/DCL문장 완료시
+		2.SQL*PLUS 정상 종료시
+
+	- 자동 ROLLBACK이 일어나는 경우
+
+		1.SQL*PLUS 비정상 종료시 혹은 시스템 실패시
+
+
+	- SAVEPOINT 예]
+
+		SQL>UPDATE emp SET depno=30 WHERE empno=7788;
+
+		SQL>SAVEPOINT point1 -- 오라클에만
+
+		SQL>UPDATE emp SET job='MANAGER';
+		SQL>UPDATE emp SET SAL=500;
+
+		SQL> ROLLBACK  TO SAVEPOINT point1;
+		SQL> EXIT
+
+	
+
+
+
+
+
+
+[주요 내장 함수]
+
+	문자열 관련]
+	
+		-NVL(컬럼명,NULL인 경우 대체할 값) 
+
+		-LOWER('문자열'):영문자를 소문자로 변환
+
+			SELECT LOWER('ORACLE') FROM DUAL +>oracle
+
+		-UPPER('문자열'):영문자를 대문자로 변환
+
+			SELECT UPPER('oracle') FROM DUAL +>ORACLE
+
+		-INITCAP('문자열'): 첫 영문자를 대문자로 변환
+
+			SELECT INITCAP('oracle') FROM DUAL +>Oracle
+
+		-CONCAT('문자열','문자열'):문자열 연결  또는 ||
+
+			SELECT CONCAT('ORACLE','JAVA') FROM DUAL +>ORACLEJAVA
+
+
+		-LENGTH():문자열 길이
+			
+			SELECT LENGTH('오라클') FROM DUAL; +>3
+
+		-lengthb():문자열 길이를 바이트로
+
+			SELECT LENGTHB('오라클') FROM DUAL; +>6
+
+		-중요!!!!!!
+		-LPAD('문자열',전체 자리수,'채울 문자열'):좌측을 지정한 값으로 채운다
+
+			SELECT LPAD('HELLO',10,'X') FROM DUAL+>XXXXXHELLO
+
+			혹은
+
+			SELECT LPAD('9',2,'0') FROM DUAL +>09
+			
+
+		-RPAD('문자열',전체 자리수,'채울 문자열'):우측을 지정한 값으로 채운다
+
+			SELECT LPAD('HELLO',10,'X') FROM DUAL+>HELLOXXXXX
+
+			혹은
+
+			SELECT LPAD('9',2,'0') FROM DUAL +>90
+
+		-INSTR('문자열','찾을 문자열'): 찾은 문자열의 인덱스 반환.
+		                                인덱스는 1부터 시작
+
+			SELECT INSTR('ABCDEFG','DE') FROM DUAL +>4
+
+			(1)SELECT * FROM DEPT WHERE instr(LOWER(DNAME),'e') !=0
+			는
+			(2)SELECT * FROM DEPT WHERE LOWER(DNAME) like '%e%'와 결과가
+			같으나 쿼리속도면에서 (1)이 훨씬 성능이 우수하다.
+
+		-SUBSTR('문자열',시작인덱스,길이):문자열에서 시작인덱스부터 길이 만큼 가져옴,
+		                                                  인덱스는 1부터 시작
+		                 
+			SELECT SUBSTR('123456789',3,3) FROM DUAL;+>345
+
+		-REPLACE('문자열','바꿀 문자열','바뀔 문자열'): 특정 문자열을 다른 문자열로 대체
+
+			SELECT REPLACE('HELLO WORLD','HELLO','JAVA') FROM DUAL +>JAVA WORLD
+
+		-TO_CHAR():
+			TO_CHAR(숫자 혹은 날짜)
+			TO_CHAR(숫자 혹은 날짜,
+			숫자형식 포맷 문자열 혹은 날짜형식 포맷 문자열)
+
+			-숫자형을 문자형으로 변환
+
+				SELECT TO_CHAR(123) || TO_CHAR(456) FROM DUAL +>123456
+				혹은
+				SELECT 123 || 456 FROM DUAL
+				-중요!!!-
+				SELECT TO_CHAR(123,'0999') FROM DUAL +>0123
+				SELECT TO_CHAR(123,'9999') FROM DUAL +> 123
+
+
+				SELECT TO_CHAR(1234,'$999,999.99') FROM DUAL +>$1,234.00
+				SELECT TO_CHAR(1234,'$999,999.00') FROM DUAL +>$1,234.00
+				SELECT TO_CHAR(1234,'L999,999') FROM DUAL +> \1,234
+				SELECT TO_CHAR(1234,'l999,999') FROM DUAL +> \1,234
+
+			
+
+				※TO_CHAR(숫자,'숫자포맷문자열') 
+				  9는 값이 있으면 표시 ,없으면 표시 안함
+				  0는 값이 있으면 표시, 없으면 0으로 표시
+                  단,소수점은 9든 0이든 값이 없으면 모두 0으로 표시됨
+                  또한 소수점은 실제값의 자리수가 많으면 나머지는 짤림.
+                  단, 정수인 경우는 실제값의 자리수가 많으면 값이 #으로 표시됨
+			   
+			-날짜형을 문자 형으로 변환
+
+				SELECT TO_CHAR(SYSDATE,'YYYY-MM-DD HH:MI:SS') FROM DUAL				
+				※'yyyy"월"mm"년"dd"일" :한글로 년월일 표시시 포맷형식에 ""로 한글을 감싼다.
+				예]SELECT TO_CHAR(SYSDATE,'YYYY"년"MM"월"DD"일" HH"시"MI"분"SS"초"') FROM DUAL
+				
+				
+
+			-지정한 날짜의 특정부분을 나타내는 문자열을 반환
+
+
+				SELECT TO_CHAR(TO_DATE('2012/10/1'),'YYYY') FROM DUAL+>2012
+				SELECT TO_CHAR(TO_DATE('2012/10/1'),'MM') FROM DUAL+>10
+
+				SELECT TO_CHAR(TO_DATE('2012/10/1'),'HH') FROM DUAL+>12
+				SELECT TO_CHAR(SYSDATE,'HH') FROM DUAL+>1~12시 형태의 시간 반환
+				                                        18시인경우 06
+									오전 6시 인 경우 06
+
+				SELECT TO_CHAR(SYSDATE,'HH AM') FROM DUAL+> 06 오전 혹은 오후
+				SELECT TO_CHAR(SYSDATE,'HH PM') FROM DUAL+> 06 오전 혹은 오후
+
+				SELECT TO_CHAR(SYSDATE,'AM HH') FROM DUAL+>  오전 혹은 오후 06
+				SELECT TO_CHAR(SYSDATE,'PM HH') FROM DUAL+>  오전 혹은 오후 06
+
+				SELECT TO_CHAR(SYSDATE,'HH24') FROM DUAL+>0~23시 형태의 시간 반환
+
+
+				SELECT TO_CHAR(SYSDATE,'day') FROM DUAL+>목요일
+				SELECT TO_CHAR(SYSDATE,'dy') FROM DUAL+>목
+
+				SELECT TO_CHAR(TO_DATE('2012/10/1'),'DD') FROM DUAL+>01
+				SELECT TO_CHAR(TO_DATE('2012/10/1'),'D') FROM DUAL+>2(요일 반환)
+				                                          1:일요일
+									  2:월
+									  3:화
+									  4:수
+									  5:목
+									  6:금
+									  7:토
+				SELECT TO_CHAR(TO_DATE('2013/1/1'),'DDD') FROM DUAL+>001
+				                                          해당년도 1월1일부터
+									  몇 일째인지 반환
+
+				※'2012-10-1' 도 날짜형식의 문자열로 인식 하지만
+				  '2012년10월1일'은 오라클이 날짜형식의 문자열로 인식 못함.
+
+		-TO_NUMBER():문자형을 숫자형으로 변환
+
+			SELECT TO_NUMBER('123') + TO_NUMBER('456') FROM DUAL +>579
+			혹은
+			SELECT '123' + '456' FROM DUAL
+
+
+		-TRIM():양쪽 공백 제거
+
+	날짜 관련]
+
+		*ALTER SESSION SET NLS_DATE_FORMAT=''
+                *REGEDIT->HKEY_LOCAL_MACHINE->SOFTWARE->ORACLE->KEY~에
+                          NLS_DATE_FORMAT ='YYYY-MM-DD'추가
+
+		*UNIX인 경우 .bashrc 혹은 .bash_profile에 export=NLS_DATE_FORMAT ='YYYY-MM-DD'추가
+		
+		-SYSDATE:현재 날짜 가져오기
+
+			SELECT SYSDATE FROM DUAL +>YY/MM/DD
+
+		- + 혹은 - :날짜 더하기 빼기
+		
+			SELECT SYSDATE + 1 FROM DUAL +>1일 더한 날 출력
+
+			SELECT SYSDATE  -1 FROM DUAL +>1일 뺀날 출력
+
+		TO_DATE():문자형을 날짜형으로 변환
+		yy:년도 2자리만
+		yyyy:년도 4자리
+		mm:01~12형태의 월 
+		d: 요일 반환(일요일은 1,월요일 2)
+		dd:1~31형태의 일 표시
+		ddd:해당 년도의 1월 1일부터 현재까지의 일수
+
+		HH:1~12시 형태로 표시
+		HH12:1~12시 형태로 표시
+		HH24:0~23시
+		MI:0~59분
+		SS:0~59초
+
+			SELECT TO_DATE('2000/10/20') FROM DUAL;+>00/10/20
+			※문자열타입으로 저장된 날짜형식을 DATE타입으로 변환 후
+			  VARCHAR2   2017-12-19
+			  TO_CHAR(DATE타입,'날짜포맷형식')을 이용해 
+			  원하는 날짜 형태로 출력하고자 할때
+
+			  단,문자열타입의 날짜형식은 년월일형태여야한다
+			  (시분초 포함시 에러 즉 날짜형식으로 인식 안됨)
+			  만약 VARCHAR2(20)의 타입으로 2013-03-14 17:05;56로 저장되었다면
+			  select to_char(to_date(substr(postdate,1,10)),'yyyy-mm-dd') postdate from board
+			  
+			
+
+		-MONTHS_BETWEEN(DATE타입,DATE타입):개월 수 구하기
+			
+			SELECT MONTHS_BETWEEN(SYSDATE,TO_DATE('2012/01/01')) FROM DUAL+>2.48.....
+
+		-ADD_MONTHS(DATE타입,숫자):개월 수 더하기
+			
+			SELECT ADD_MONTHS(SYSDATE,2) FROM DUAL+>
+
+		
+
+	수학관련]
+
+		-ROUND() : 반올림
+
+		-FLOOR(): 소수자리 버림
+
+		-CEIL(): 올림
+
+		-MOD: 나머지
+
+			SELECT MOD(5,2) FROM DUAL+>1
+
+		-POWER(2,3):지수곱
+		-SQRT(10):제곱근 
+
+		-DECODE()함수는  첫번째 매개변수의 값에 따라 결과를 푯하는 함수
+
+		 DECODE(표현식,값1,결과값1,값2,결과값2,..값N,결과값N,기본값)
+		       표현식이 값1일때 결과값1이 반환됨 값2일때는 결과값2
+		       표현식이 아무값도 해당되지 않을때 기본값 반환
+
+		 예]
+		 SELECT DECODE( 10/2 ,1,'값이1',2,'값이2',3,'값이3','그외값') FROM DUAL;
+
+		 select ename,
+		 decode(job,'MANAGER','매니저','SALESMAN','영업맨','기타') 
+		 FROM EMP
+
+
+		 DECODE()는 값1 = 결과값1 즉 = 연산만 가능
+
+		 ※CASE WHEN 절은 다양한 조건식 가능
+
+		 1] 다양한 조건을 줄때
+		 CASE  WHEN  조건1 THEN 결과값1
+	              WHEN  조건2 THEN 결과값2
+			    ..................
+		      WHEN  조건N THEN 결과값N
+		      ELSE  그외값
+	         END  [컬럼별칭]
+
+		 예]
+
+		select ename,
+		CASE JOB WHEN 'MANAGER' THEN '매니저'
+			 WHEN 'SALESMAN' THEN '영업맨'
+			 ELSE '기타'
+		END AS JOB,DEPTNO,
+		-- 범위를 조건으로 할때는 CASE와 WHEN사이에 
+		    표현식 생략.(자바의 IF문)
+		CASE WHEN SAL >= 3000 THEN '고액 연봉자'
+		     WHEN SAL >= 2000 THEN '중간 연봉자'
+		     ELSE '하위 연봉자'
+		END SAL
+		FROM EMP
+
+		2] DECODE()함수처럼 쓰려면
+		 --범위가 아닌 특정 값으로 분기할때는 (자바의 SWITCH문)
+		     CASE와 WHEN 사이에 표현식 생략 불가
+
+		 CASE 표현식 WHEN  값1 THEN 결과값1
+	                     WHEN  값2 THEN 결과값2
+			    ..................
+		             WHEN  값N THEN 결과값N
+			     ELSE  그외값
+	         END  [컬럼별칭]
+
+		 예]
+		 select ename,
+			CASE JOB WHEN 'MANAGER' THEN '매니저'
+				 WHEN 'SALESMAN' THEN '영업맨'
+				 ELSE '기타'
+			END AS JOB
+		FROM EMP
+
+
+
+[CURSOR]
+
+	- SELECT(질의) 문장에 의해 여러행이 RETURN되는 경우 각 행에 접근하기 위한 것
+	
+	CURSOR 선언]
+
+		CURSOR 커서명 IS
+			SELECT문장 ------------------DECLARE부에서 한다
+			(INTO절이 없는 SELECT문)
+
+	OPEN CURSOR]
+
+		-질의를 수행하라는 의미 즉 
+		  OPEN시에 CURSOR 선언시의 SELECT문장이 실행되어
+		 결과 셋을 얻게 된다 CURSOR는 그 결과세의 첫번째 행에
+          바로 위에 위치하게 된다.
+
+		 OPEN 커서명
+
+	FETCH ~ INTO ~]
+
+		-결과셋에서 하나의 행을 읽어 들이는 작업 ,
+		 결과 셋에서 인출(FETCH)후에
+		 CURSOR는 다음 행으로 이동됨
+
+		 FETCH  커서명 INTO(속으로) {varaiable1[,variable2,....]};
+
+
+	CURSOR 닫기]
+
+		-결과셋의 자원을 반납.SELECT 문장이 다 처리된후 CURSOR를 CLOSE
+
+		CLOSE 커서명;
+
+
+
+	CURSOR의 속성-상수]
+	커서명%FOUND :가장 최근의 인출(FETCH)이 행을 RETURN하면 TRUE아니면 FALSE;
+	커서명%ROWCOUNT :지금까지 RETURN된 행의 수
+
+
+	
+
+	소스 예]
+
+	-----부서 번호를 입력받아 출력하는 예제
+
+	SET SERVEROUT ON
+
+	ACCEPT p_deptno PROMPT '부사번호를 입력하세요 : '
+
+	DECLARE
+
+		v_deptno emp.deptno%TYPE:=&p_deptno;
+		v_ename emp.ename%TYPE;
+		v_sal emp.sal%TYPE;
+
+		--커서 선언
+
+		CURSOR emp_cursor IS
+			SELECT ename,sal FROM emp WHERE deptno=v_deptno;
+
+
+	BEGIN
+		
+		--커서 오픈
+
+		OPEN emp_cursor;
+
+		DBMS_OUTPUT.PUT_LINE('         이름          연봉             ');
+		DBMS_OUTPUT.PUT_LINE('----------------------------------------');
+		
+		LOOP
+			--FETCH 하기
+			FETCH emp_cursor INTO v_ename,v_sal;
+			
+			EXIT WHEN  emp_cursor%FOUND;
+			
+
+			DBMS_OUTPUT.PUT_LINE(RPAD(v_ename,12) || LPAD(TO_CHAR(v_sal,'$99,999,990.00'),16));
+			DBMS_OUTPUT.PUT_LINE('----------------------------------------');
+
+
+		END LOOP;
+		
+		--커서 닫기
+
+		CLOSE emp_cursor;
+		
+	END;
+	/
+	SET SERVEROUT OFF
+
+[SUBPROGRAM]
+
+	- PL/SQL에는 (스토어드)프로시저 와 함수라는 두가지 유형의 SUBPROGRAM이 있다
+	- SELECT구문 뿐만 아니라 기타 DML문등을 이용하거나 
+	  혹은 프로그래밍적인 요소등을 사용하여 
+	  처리하기 복잡한 여러가지 데이터베이스 작업등을 처리 할 수 있도록 만들어진 
+	  데이터베이스 객체이다
+
+
+	Function]
+
+		- 사용자가 PL/SQL구문을 사용하여 직접 오라클 에서 제공하는 내장함수와 
+		  같은 기능을 정의 한 것
+		- 함수는 IN 파라미터만 사용할 수 있으며,
+		  반드시 반환될 값의 데이터 타입을  
+		  RETURN문에 선언해야 하며 단일값만 반환 된다.
+
+		-함수 구문
+		
+		  CREATE [OR REPLACE] FUNCTION 함수명
+		  [(
+		  매개변수1 IN 자료형,    --IN 생략 가능
+		  매개변수2 IN 자료형     ---자료형 정의시 자리수 지정 안함
+		                   
+		  )]
+			RETURN 자료형-- 자리수 지정 안함
+		  IS
+
+		  [변수 선언]
+			
+		  BEGIN
+
+		  함수 내용
+
+		  RETURN(값);
+
+		  END;
+
+		 
+
+		   함수 예]
+
+
+		      - FUNCTION정의
+
+		      CREATE OR REPLACE FUNCTION GETSUM(A   NUMBER,B IN  NUMBER)
+					RETURN NUMBER
+			   IS
+					HAP NUMBER;
+				BEGIN
+						
+				HAP:=0;
+				
+				FOR i IN A .. B LOOP
+					HAP:=HAP+i;		
+				END LOOP;
+					
+
+				RETURN HAP;
+			END;
+			/
+
+		     -FUNCTION 호출
+
+		     방법1)
+				SQL>SELECT GETSUM(1,100) FROM DUAL
+		    
+		     방법2)
+				SQL>VAR  HAP CHAR(2);
+				SQL>EXCUTE :HAP := GETSUM(호출)(1,100);
+				SQL>PRINT HAP;
+
+
+
+		  함수 예]
+		  CREATE OR REPLACE FUNCTION GETGENDER(JUMIN VARCHAR2)
+			RETURN NCHAR
+			IS   ----함수란(;는 붙이면 안됨)
+				
+				RTVAL VARCHAR2(4);
+
+			BEGIN
+				IF TO_NUMBER(SUBSTR(TRIM(JUMIN),7,1)) = 1 THEN
+					RTVAL:='남자';
+				ELSE 
+					RTVAL:='여자';
+				END IF;
+
+				RETURN RTVAL;
+			END;
+			/
+
+		※다른 계정에 함수 실행권한 주기
+		 grant execute on 소유계정.함수명 to 부여받는계정;		 
+		 예]grant execute on scott.asterisk to hr;
+
+
+	저장 프로시저([Stored] Procedure)] --자바할때 쓰임
+
+		
+		- 프로시저는 RETURN문이 없다  OUT 매개변수로 값을 RETURN한다.
+		- 저장 프로시져(STORED PROCEDURE)의 장점
+		  (1) 매우 좋은 성능
+		  (2) 보안성을 높일 수 있음.
+		  (3) 다양한 처리가 가능
+		  (4) 네트웍의 부하를 줄일 수 있음.
+
+
+		-프로시저 구문
+		
+		:RETURN 문이 없다.
+
+		CREATE [OR REPLACE] PROCEDURE 프로시저명
+		[(
+		매개변수 IN 자료형,//크기 지정 안함
+		매개변수 OUT 자료형,//출력용
+		매개변수 IN OUT 자료형//입 출력용   EXEC시 숫자 전달 불가능 ,역시 변수 전달
+		      
+		)]
+		IS
+		[변수선언]
+		BEGIN
+		........
+		END;
+
+		-실행
+		EXECUTE 프로시저명[(인수1,인수2,..)]
+
+		
+		※ 매개변수의 자료형 지정시 해당 테이블의 컬럼과 같은
+		   자료형으로 지정하고 싶을때 테이블명.컬러명%TYPE
+		   이라고 지정한다
+
+		   예] 매개변수 IN 테이블명.컬럼명%TYPE
+
+
+		
+
+		소스 예]
+
+		- 사원번호 와 연봉을 입력받아 연봉을 수정하고 수정된 행의 개수를 받아 오기
+		SET SERVEROUT ON
+		CREATE OR REPLACE PROCEDURE 
+		emp_sal_procedure(
+
+		p_empno [IN] emp.empno%TYPE,
+		p_sal IN emp.sal%TYPE,
+		count OUT NUMBER)
+		
+		IS
+
+		BEGIN
+			UPDATE emp
+				SET sal =p_sal
+				WHERE empno =p_empno;
+
+			IF SQL%NOTFOUND THEN
+				DBMS_OUTPUT.PUT_LINE(TO_CHAR(p_empno) || '는 없는 사원번호입니다');
+			ELSE
+				DBMS_OUTPUT.PUT_LINE(TO_CHAR(SQL%ROWCOUNT) || '명의 자료가 수정 되었습니다.');
+				count:=SQL%ROWCOUNT;
+			END IF;	
+			
+			COMMIT;  -- 커밋해야 실제 반영됨.
+			
+		END;
+		/
+		SET SERVEROUT OFF
+
+
+		-프로시저 실행
+		SQL>VAR count NUMBER
+		SQL>EXECUTE emp_sal_procedure(10,1000,:count);
+		SQL>PRINT count
+		
+[함수와 프로시저 비교]
+
+---------------------------+-------------------------------------------
+			               |
+	프로시저               |        함수
+---------------------------+-------------------------------------------                  
+PL/SQL문으로서 실행        |   식의 일부로서 사용
+---------------------------+-------------------------------------------
+RETURN문이 없음            |   RETURN문이 필수
+---------------------------+-------------------------------------------
+값을 REURN할수 있음        |   값을 RETURN하는 것이 필수
+---------------------------+-------------------------------------------
+
+* 프로시저와 함수 실행시 
+
+SQL>EXECUTE 함수명 혹은 프로시저명(매개변수1[,매개변수2,...]);
+
+-함수 실행
+
+  RETURN값을 바인드 변수에 받을때
+
+  SQL>VAR RTVAL 자료형;
+  SQL>EXECUTE :RTVAL:=함수명(매개변수1[,매개변수2,..]);
+  SQL>PRINT RTVAL;
+
+
+-프로시저 실행
+
+ SQL>VAR OUTVAL 자료형;
+ SQL>VAR INOUTVAL2 자료형;  --매개변수가 IN OUT인 경우
+ SQL>BEGIN
+ 2   :INOUTVAL2:=값;
+ 3   END;
+ 4   /
+ SQL>EXECUTE 프로시저명(IN파라미터값,:OUTVAL,:OUTVAL2);
+ SQL>PRINT OUTVAL;
+ SQL>PRINT OUTVAL2;
+
+
+----회원일치여부 프로시저
+CREATE OR REPLACE PROCEDURE SP_CHECK_MEMBER(IEMPNO IN EMP.EMPNO%TYPE,IENAME IN EMP.ENAME%TYPE,FLAG OUT NUMBER)
+IS
+CNT NUMBER:=0;
+BEGIN
+	SELECT COUNT(*) INTO CNT 
+	FROM EMP
+	WHERE EMPNO = IEMPNO;
+
+	IF CNT = 0 THEN
+		FLAG:=0;   -- 아이디가 일치하지 않는 경우
+	ELSE
+		BEGIN		
+			CNT:=0;
+			SELECT COUNT(*) INTO CNT
+			FROM EMP
+			WHERE EMPNO=IEMPNO AND ENAME=UPPER(IENAME);
+
+			IF CNT = 1 THEN
+				FLAG:=2; --아이디와 비밀번호가 일치하는 경우
+			ELSE
+				FLAG:=1;  --아이디는 일치하나 비밀번호가 일치하지 않은 경우
+			END IF;
+
+		END;
+	END IF;
+
+END;
+/
+[트리거]
+
+  - 자동으로 실행되는 프로시저의 한 종류. 직접(exec) 실행불가
+  - 하나의 테이블에 최대 3개까지 트리거 적용가능
+    단, 트리거 많을 수록 성능저하 초래 가능성 있다.
+  - 트리거 몸체(PL/SQL블락)안에는 COMMIT;ROLLBACK불가
+  - :NEW(변경후) ,:OLD(변경전) 임시테이블은 행단위 트리거에서만 사용가능
+  
+  
+  - 트리거 종류
+  
+  1. 트리거몸체(DECLARE~ BEGIN END;절)의 실행 횟수에 따른 분류
+  
+     문장단위 트리거- 한번만 실행
+     행단위 트리거   - 행단위로 변경된 횟수만큼 실행됨 
+    
+  2. 타이밍에 따른 분류
+      BEFORE트리거- 이벤트(I/D/U)발생전 트리거몸체 실행됨
+                            예]판매와 상품(재고)관계 ,보안
+      AFTRE트리거  - 이벤트(I/D/U)발생후 트리거몸체 실행됨
+                            예]입고와 상품(재고) 관계
+      
+  -트리거 생성
+  
+  CREATE TRIGGER 트리거명
+  타이밍 [BEFORE|AFTER] 이벤트 [INSERT(입력) [OR] | UPDATE(수정) [OR] DELETE(삭제)]
+  ON 트리거를 걸 테이블명
+  [FOR EACH ROW] --생략시 문장단위 트리거
+  [WHEN 트리거 조건]
+  DECALRE
+  변수 선언
+  BEGIN
+  
+  END;
+  /
+  -트리거 삭제
+  DROP TRIGGER 트리거명
+  -특정 트리거 활성화/비활성화
+  ALTER TRIGGER 트리거명 [ENABLE/DISABLE]
+  - 테이블에 건 모든 트리거 활성화 비활성화
+  ALTER TABLE 테이블명  ENABLE/DISABLE  ALL TRIGGERS 
+  
+  
+  ※INSERTING /DELETING/UPDATING 키워드
+     PL/SQL블락안에서 사용하는 상수 
+     예]INSERT이벤트가 발생하면 INSERTING 이 TRUE
+
+  ※BEFORE트리거 걸때 주로 사용하는 함수
+    RAISE_APPLICATION_ERROR(에러번호,'에러메시지');
+    에러번호는 -20000 ~-20999사이의 임의의 숫자 지정
+[백업과 복원]
+
+	:백업 및 복원 실행 파일 위치 : [오라클설치된 디렉토리]\product\10.2.0\db_1\BIN
+         백업:EXP.EXE
+         복원:IMP.EXE
+
+	-백업(Export) :데이타와 구조를 바이너리 파일로 저장
+
+
+		dos>exp userid=아이디/비밀번호@전역데이타베이스명 file=저장경로
+
+		예]		
+	
+		:system계정으로 전체 백업
+		
+			dos>exp userid=system/비밀번호@전역데이타베이스명 full=y file=c:\dump.dmp
+		
+		:system 계정으로 scott 계정에 있는 DB백업
+
+			dos>exp userid=system/비밀번호@전역데이타베이스명 owner=scott file=c:\dump.dmp
+		
+		:scott계정으로 자신의 모든 데이타 백업
+
+			dos>exp userid=scott/비밀번호@전역데이타베이스명 file=c:\dump.dmp
+
+
+		:scott계정으로 emp테이블만 백업
+
+			dos>exp userid=scott/비밀번호@전역데이타베이스명 file=c:\dump.dmp tables=emp
+			*여러개 테이블을 동시에 받으려면 tables=(테이블1,테이블2,...)
+		
+		*백업 파일의 확장자는 보통 .dmp 혹은 .dat .bak으로 한다 한다.
+
+	-복원(Import)
+
+		imp 아이디/비밀번호@전역데이타베이스명 file=백업경로
+
+		
+		예]
+
+		:system계정으로 전체 복원
+
+			
+			dos>imp system/비밀번호@전역데이타베이스명 file=c:\dump.dmp
+		
+		
+		:system 계정으로 scott 계정에 있는 DB복원
+
+			dos>imp system/비밀번호@전역데이타베이스명 fromuser=scott touser=scott file=c:\dump.dmp
+
+		:scott계정으로 자신의 모든 데이타 복원
+			
+			dos>imp scott/비밀번호@전역데이타베이스명 file=c:\dump.dmp
+
+
+		:복원하고자하는 DB에 같은 이름의 Object가 있을때,오류를 무시하고 건너 띄고 싶을때 ignore 옵션사용
+
+			dos>imp 아이디/비밀번호@전역데이타베이스명 file=c:\dump.dmp ignore=y
+
+		:system계정으로 들어가 scott에서 Export한 데이터를 scott2에게 Import
+			
+			dos>imp system/비밀번호@전역데이타베이스명 fromuser=scott touser=scott2 file=c:\dump.dmp
+
+=========================================
+*오라클 설치가 안되는 경우
+
+	-winodws7에서 설치가 안되는 경우
+		setup.exe선택->마우스 우클릭 ->호환성 탭메뉴 클릭->다음에 대해 호환성 모드(XP)로 이 프로그램 실행
+	 
+	-유동 아이피 환경에서 설치 하는 경우
+
+	 제어판->새 하드웨어 추가 마법사->목록에서 직접 선택->네트웍크 어댑터->
+	 Microsoft의 Loopback Adapter선택
+	 ->네트웍 환경에서 추가된 로컬영역 2(Loopback Adapter)에 
+	   아이피(192.168.0.1)와 서브넷 마스크(255.255.255.0)설정
+	   아이피는 본인의 DHCP의 게이트 웨이 주소
+	 ->hosts파일에 방금 추가한 아이피와 컴푸터명을 추가후 저장
+	(검색시 host*.*로 검색) xp인 경우:C:\WINDOWS\system32\drivers\etc에 있음
+	 예]
+
+	
+	127.0.0.1       localhost
+	192.168.0.1	romantist  ->추가한 부분
+
+	위 과정을 거친후 다시 setup.exe더블 클릭 후 설치 진행
+
+*  사용자 계정 목록 보기
+    SQL> DESC DBA_USERS;
+   SQL> SELECT * FROM DBA_USERS
+  
+
+* 제약조건 목록 보기
+   SQL> DESC  USER_CONSTRAINTS
+   SQL> SELECT * FROM USER_CONSTRAINTS

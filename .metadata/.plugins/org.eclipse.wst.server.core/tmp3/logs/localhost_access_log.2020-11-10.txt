@@ -1,0 +1,9 @@
+127.0.0.1 - - [10/Nov/2020:22:19:06 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:19:09 +0900] "GET /KimYouKyungProj2/Template/NailartTop.jsp HTTP/1.1" 200 1575
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:19:09 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:21:07 +0900] "GET /KimYouKyungProj2/Nailart/MainPage.jsp HTTP/1.1" 200 3360
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:21:07 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:22:26 +0900] "GET /KimYouKyungProj2/Nailart/MainPage.jsp HTTP/1.1" 200 3369
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:22:26 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:22:53 +0900] "GET /KimYouKyungProj2/Nailart/MainPage.jsp HTTP/1.1" 200 3369
+0:0:0:0:0:0:0:1 - - [10/Nov/2020:22:22:53 +0900] "GET /favicon.ico HTTP/1.1" 404 818

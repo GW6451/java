@@ -1,0 +1,5 @@
+127.0.0.1 - - [19/Nov/2020:21:10:27 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [19/Nov/2020:21:10:27 +0900] "GET /BootStrapProj/CSS/Table.jsp HTTP/1.1" 200 5823
+0:0:0:0:0:0:0:1 - - [19/Nov/2020:21:10:27 +0900] "GET /BootStrapProj/bootstrap/js/bootstrap.min.js;jsessionid=954F31C74F23EFD057D50D5475E2426F HTTP/1.1" 200 35452
+0:0:0:0:0:0:0:1 - - [19/Nov/2020:21:10:27 +0900] "GET /BootStrapProj/bootstrap/css/bootstrap.min.css;jsessionid=954F31C74F23EFD057D50D5475E2426F HTTP/1.1" 200 117150
+0:0:0:0:0:0:0:1 - - [19/Nov/2020:21:10:27 +0900] "GET /favicon.ico HTTP/1.1" 404 818

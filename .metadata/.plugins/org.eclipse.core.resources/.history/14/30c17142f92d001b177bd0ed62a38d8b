@@ -1,0 +1,9 @@
+package com.kosmo.rest.service;
+
+public class ContactsDTO {
+	private String contact_id;
+	private String no;
+	private String name;
+	private String photo;
+	private String tel;
+}

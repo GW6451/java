@@ -1,0 +1,5 @@
+127.0.0.1 - - [27/Nov/2020:18:00:13 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [27/Nov/2020:18:00:16 +0900] "GET /KimYouKyungProj2/Nailart/Write.jsp HTTP/1.1" 200 6455
+0:0:0:0:0:0:0:1 - - [27/Nov/2020:18:00:16 +0900] "GET /KimYouKyungProj2/Images/nail-polish.png;jsessionid=164E44AAC9E06EB3AE0965CE50336CC7 HTTP/1.1" 200 12489
+0:0:0:0:0:0:0:1 - - [27/Nov/2020:18:00:16 +0900] "GET /KimYouKyungProj2/Nailart/Write.jsp HTTP/1.1" 200 6103
+0:0:0:0:0:0:0:1 - - [27/Nov/2020:18:00:16 +0900] "GET /favicon.ico HTTP/1.1" 404 818

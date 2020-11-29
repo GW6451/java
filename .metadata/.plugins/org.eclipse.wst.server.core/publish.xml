@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<publish-info>
+  <server id="JSProj" path="publish2.dat"/>
+  <server id="KimYouKyungProj2" path="publish1.dat"/>
+  <server id="JQueryServer" path="publish3.dat"/>
+  <server id="SpringServer" path="publish0.dat"/>
+  <server id="SpringRestServer" path="publish4.dat"/>
+  <server id="BootStrapProj" path="publish2.dat"/>
+</publish-info>

@@ -1,0 +1,87 @@
+package abstract17;
+/*
+[추상클래스 -불완전한 설계도]
+1]class 앞에 abstract(modifier)를 붙이면
+    그 클래스는 추상 클래스가 된다
+2]어떤 클래스가 추상메소드를 가지면 그 클래스를 반드시 추상 클래스로 만들어줘야한다
+3]
+4]
+5]추상 클래스를 상속 받은 자식클래스(sub class)
+
+
+#추상메소드란
+	- 메소드 앞에 abstract키워드가 붙은 것
+ */
+//추상클래스1] - 추상메소드가 없는 추상 클래스
+class NoHavingAbstractMethod{
+	//멤버 상수
+	public static final int MAX_INT = Integer.MAX_VALUE;
+	//멤버 변수
+	int instanceVar;
+	static int staticVar;
+	//멤버 메소드
+	void instanceMethod() {}
+	static void staticMethod() {}
+}///NoHavingAbstractMethod
+
+class NoHavingChild extends NoHavingAbstractMethod{
+	//멤버 변수
+	int newVar;
+	/*
+	 * 추상메소드
+	 */
+	//강제사항아님 -임의로 오버라이딩 한 것
+	@Override
+	void instanceMethod() {		
+	}	
+}///NoHavingChild
+abstract class HavingAbstractMethod{
+	//void abstractMethod();//구현부가 없거나 abstract지정자를 안 붙여서
+	//추상 메소드를 멤버로 가지면 그 클래스는 반드시 추상클래스가 되어야 한다
+	abstract void abstractMethod();
+}///HavingAbstractBasic
+
+class HavingChild extends HavingAbstractMethod{
+	///의무적으로 오버라이딩한 메소드
+	@Override
+	void abstractMethod() {}
+	void newMethod() {}
+	
+}//NoHavingAbstractMethod
+/*
+ * 추상클래스3]
+ * 추상메소드를 가진 추상클래스를 상속받은 자식클래스에 의무적으로 오버라이딩 안하려면 자식클래스도 추상 클래스로 만들어 주면 된다
+ */
+abstract class HavingChildNoOverriding extends HavingAbstractMethod {
+	abstract void abstractNewMethod();
+}///HavingChildNoOverriding
+class HavingNewChild extends HavingChildNoOverriding{
+
+	@Override
+	void abstractNewMethod() {		
+	}
+
+	@Override
+	void abstractMethod() {
+	}
+	
+}
+public class AbstractBasic {
+
+	public static void main(String[] args) {
+		//1.추상클래스는 인스턴스화 불가 - 자식타입으로는 객체생성 가능
+		//NoHavingAbstractMethod nam = new NoHavingAbstractMethod();//[x]
+		//추상클래스의 자식클래스를 부모 클래스에 이질화
+		NoHavingAbstractMethod nam = new NoHavingChild();
+		
+		HavingAbstractMethod ham = new HavingChild();
+		ham.abstractMethod();
+		//자식에서 새롭게 확장한 멤버
+		((HavingChild)ham).newMethod();
+		//
+		System.out.println(NoHavingAbstractMethod.MAX_INT);
+		System.out.println(NoHavingChild.MAX_INT);
+
+	}///////main
+
+}///////////class

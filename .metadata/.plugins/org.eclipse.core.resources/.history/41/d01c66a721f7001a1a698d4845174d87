@@ -1,0 +1,43 @@
+package thread23;
+
+//스레드로 구현하지 않은 클래스
+class NotThread{
+	String title;
+	public NotThread(String title) {
+		this.title = title;
+	}
+	//스레드로 구현하지 않은 메소드
+	void notThreadMethod() {
+		//아래 로직이 시간이 오래 걸리는 작업이라고 가정
+		for(int i=1; i<=10; i++) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {e.printStackTrace();}//멈춘다
+			System.out.println(String.format("%s]i = %d", title,i));
+		}
+	}
+	
+}
+//스레드로 구현한 클래스
+//1]Thread클래스를 상속받아 스레드 구현
+class YesThread extends Thread{
+	
+	public YesThread(String threadName) {
+		super(threadName);
+	}
+	void ThreadMethod() {
+		//아래 로직이 시간이 오래 걸리는 작업이라고 가정
+				for(int i=1; i<=10; i++) {
+						sleep(2000);
+					System.out.println(String.format("%s]i = %d", title,i));
+				}
+	}
+}
+
+public class ThreadApp {
+
+	public static void main(String[] args) {
+
+	}/////main
+
+}///////////class

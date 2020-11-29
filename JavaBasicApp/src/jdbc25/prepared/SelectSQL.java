@@ -1,0 +1,49 @@
+package jdbc25.prepared;
+
+import java.sql.SQLException;
+
+import jdbc25.service.IConnectImpl;
+
+public class SelectSQL extends IConnectImpl {
+	public SelectSQL() {
+		super(ORACLE_URL,"SCOTT","scott");///혹은 connect(ORACLE_URL,"SCOTT","scott");
+	}
+	@Override
+	public void execute() throws Exception {
+		//1]미리 쿼리문 준비
+		//1-1]인파라미터가 없는 쿼리문
+		//String sql = "SELECT ename, TRIM(TO_CHAR(sal,'L99,999')) sal,job,TO_CHAR(hiredate,'YYYY.MM.DD') From emp ORDER BY hiredate DESC";
+		//1-2]인파라미터가 있는 쿼리문 - 특정 문자로 시작하는 레코드 검색
+		///String sql = "SELECT ename, TRIM(TO_CHAR(sal,'L99,999')) sal,job,TO_CHAR(hiredate,'YYYY.MM.DD') From emp WHERE ename LIKE ? ||'%' ORDER BY hiredate DESC";
+		//1-3]인파라미터가 있는 쿼리문 - 특정 문자로 끝나는 레코드 검색
+		///String sql = "SELECT ename, TRIM(TO_CHAR(sal,'L99,999')) sal,job,TO_CHAR(hiredate,'YYYY.MM.DD') From emp WHERE ename LIKE '%' || ? ORDER BY hiredate DESC";
+		//1-4]인파라미터가 있는 쿼리문 - 특정 문자가 포함된 레코드 검색
+		String sql = "SELECT ename, TRIM(TO_CHAR(sal,'L99,999')) sal,job,TO_CHAR(hiredate,'YYYY.MM.DD') From emp WHERE ename LIKE '%' || ? ||'%' ORDER BY hiredate DESC";
+		//2]PreparedStatement객체 생성
+		psmt = conn.prepareStatement(sql);
+		try {
+			//3]인파라미터 설정 - 인파라미터 있는 경우
+			psmt.setNString(1, getValue("찾는 문자열"));
+			//4]쿼리 실행
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				System.out.println(String.format("%-8s%-8s%-10s%s",
+											rs.getString(1),
+											rs.getString(2),
+											rs.getString(3),
+											rs.getString(4)));
+			}////while
+		}
+		catch(SQLException e) {
+			System.out.println("조회쿼리 실행 오류:"+e.getMessage());
+		}
+		finally {
+			close();
+		}
+	}////execute
+
+	public static void main(String[] args) throws Exception {
+		new SelectSQL().execute();
+	}////////main
+
+}/////////class

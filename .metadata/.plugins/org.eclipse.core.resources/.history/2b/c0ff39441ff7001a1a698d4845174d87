@@ -1,0 +1,10 @@
+package thread23;
+
+public class ThreadApp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

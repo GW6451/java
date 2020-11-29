@@ -1,0 +1,8 @@
+127.0.0.1 - - [22/Nov/2020:18:40:26 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [22/Nov/2020:18:40:26 +0900] "GET /BootStrapProj/ HTTP/1.1" 404 825
+0:0:0:0:0:0:0:1 - - [22/Nov/2020:18:40:27 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+127.0.0.1 - - [22/Nov/2020:18:40:59 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [22/Nov/2020:18:41:01 +0900] "GET /BootStrapProj/Component/Navigation.jsp HTTP/1.1" 200 4127
+0:0:0:0:0:0:0:1 - - [22/Nov/2020:18:41:01 +0900] "GET /BootStrapProj/bootstrap/css/bootstrap.min.css;jsessionid=528DF07549144FB14AF17E7C519739E0 HTTP/1.1" 200 117150
+0:0:0:0:0:0:0:1 - - [22/Nov/2020:18:41:01 +0900] "GET /BootStrapProj/bootstrap/js/bootstrap.min.js;jsessionid=528DF07549144FB14AF17E7C519739E0 HTTP/1.1" 200 35452
+0:0:0:0:0:0:0:1 - - [22/Nov/2020:18:41:01 +0900] "GET /favicon.ico HTTP/1.1" 404 818

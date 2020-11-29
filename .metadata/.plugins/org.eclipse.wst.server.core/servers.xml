@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/SpringServer-config" deployDir="wtpwebapps" hostname="localhost" id="SpringServer" name="SpringServer" runtime-id="SpringServer" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="18">
+    <list key="modules" value0="SpringProj::org.eclipse.jst.jee.server:SpringProj::jst.web::4.0"/>
+  </server>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/BootStrapProj-config" deployDir="wtpwebapps" hostname="localhost" id="BootStrapProj" name="BootStrapProj" runtime-id="BootStrapProj" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="2">
+    <list key="modules" value0="BootStrapProj::org.eclipse.jst.jee.server:BootStrapProj::jst.web::3.1"/>
+  </server>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/JSProj-config" deployDir="wtpwebapps" hostname="localhost" id="JSProj" name="JSProj" runtime-id="JSProj" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="3">
+    <list key="modules" value0="JSPProj::org.eclipse.jst.jee.server:JSPProj::jst.web::3.0"/>
+  </server>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/KimYouKyungProj2-config" deployDir="wtpwebapps" hostname="localhost" id="KimYouKyungProj2" name="KimYouKyungProj2" runtime-id="KimYouKyungProj2" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="5">
+    <list key="modules" value0="KimYouKyungProj2::org.eclipse.jst.jee.server:KimYouKyungProj2::jst.web::4.0"/>
+  </server>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/JQueryServer-config" deployDir="wtpwebapps" hostname="localhost" id="JQueryServer" name="JQueryServer" runtime-id="JQueryServer" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="3">
+    <list key="modules" value0="JQueryProj::org.eclipse.jst.jee.server:JQueryProj::jst.web::4.0" value1="GitProj::org.eclipse.jst.jee.server:GitProj::jst.web::4.0" value2="GitTrainingProj::org.eclipse.jst.jee.server:GitTrainingProj::jst.web::4.0"/>
+  </server>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/SpringRestServer-config" deployDir="wtpwebapps" hostname="localhost" id="SpringRestServer" name="SpringRestServer" runtime-id="SpringRestServer" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="1">
+    <list key="modules" value0="SpringRestProj::org.eclipse.jst.jee.server:SpringRestProj::jst.web::4.0"/>
+  </server>
+</servers>

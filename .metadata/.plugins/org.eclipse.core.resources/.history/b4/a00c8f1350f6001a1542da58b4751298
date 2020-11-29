@@ -1,0 +1,11 @@
+package exception21;
+
+public class ExceptionBasicApp {
+
+	public static void main(String[] args) {
+		
+		int num;
+
+	}//////main
+
+}/////////class

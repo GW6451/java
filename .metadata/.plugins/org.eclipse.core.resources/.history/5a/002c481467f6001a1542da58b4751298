@@ -1,0 +1,16 @@
+package collection;
+
+import java.util.List;
+import java.util.Vector;
+
+public class AcademyCollectionLogicProject {
+	
+	public static final int MAX_PERSON = 3;
+	List<Person> person;
+	
+	public AcademyCollectionLogicProject() {
+		person = new Vector<Person>();
+		
+	}/////
+
+}////class AcademyCollectionLogicProject

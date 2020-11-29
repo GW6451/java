@@ -1,0 +1,11 @@
+package com.kosmo.rest.service;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ContactsDAO {
+	//sqlSessionTemplate객체 주입]
+	@Resource(name="template")
+	private SqlSessionTemplate template;
+}

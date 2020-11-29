@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;FileUtils.java&apos; to &apos;KimYouKyungProj2/src/model&apos;&#x0D;&#x0A;- Original project: &apos;JSPProj&apos;&#x0D;&#x0A;- Destination element: &apos;KimYouKyungProj2/src/model&apos;&#x0D;&#x0A;- Original element: &apos;model.dataroom.FileUtils.java&apos;" description="Copy compilation unit" destination="=KimYouKyungProj2/src&lt;model" element1="/src&lt;model.dataroom{FileUtils.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1606025366379" units="1" version="1.0"/>
+</session>

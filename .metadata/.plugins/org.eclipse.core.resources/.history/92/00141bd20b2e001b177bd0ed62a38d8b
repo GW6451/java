@@ -1,0 +1,100 @@
+package com.kosmo.rest;
+
+import java.util.List;
+import java.util.Vector;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.kosmo.rest.service.UsersDTO;
+
+@RestController
+public class RestAPIController {
+	/*
+	 * GET메소드:쿼리 파라미터 사용
+	 * POSTMAN:
+	 * GET : http://localhost:8080/rest/users?name=kosmo
+	 * produces="text/html; charset=UTF-8"는 한글깨짐 방지용
+	 */
+	@GetMapping(value = "/users", produces = "text/html; charset=UTF-8")
+	public String getQueryParameter(@RequestParam String name) {
+		return String.format("GET:쿼리파라미터 사용 - %s", name);
+	}//////////////////
+	
+	/*
+	 * GET메소드 : URI 파라미터 사용
+	 * POSTMAN:
+	 * GET : http://localhost:8080/rest/users?name=kosmo
+	 */
+	@GetMapping(value = "/users/{name}", produces = "text/html; charset=UTF-8")
+	public String getURIParameter(@PathVariable String name) {
+		return String.format("GET:URI파라미터 사용 - %s", name);
+	}///////////////
+	/*
+	 * POST메소드:쿼리 파라미터 사용
+	 * POSTMAN:
+	 */
+	@PostMapping(value = "/users", produces = "text/html; charset=UTF-8")
+	public String postQueryParameter(@RequestParam String name) {
+		return String.format("POST:URI파라미터 사용 - %s", name);
+	}///////////////
+	
+	@PostMapping(value = "/users/{name}", produces = "text/html; charset=UTF-8")
+	public String postURIParameter(@PathVariable String name) {
+		return String.format("POST:URI파라미터 사용 - %s", name);
+	}///////////////
+	
+	@GetMapping("/json/users")
+	public List<UsersDTO> getJsonUsers(){
+		List<UsersDTO> users = new Vector<UsersDTO>();
+		users.add(new UsersDTO("가길동","20","가산동"));
+		users.add(new UsersDTO("나길동","30","나산동"));
+		return users;		
+	}////////////////////
+	
+	@GetMapping("/json/users/{userid}")
+	public UsersDTO getJsonUser(@PathVariable String userid) {
+		if(userid.equalsIgnoreCase("KIM"))
+			return new UsersDTO("김길동","45","청담동");
+		else if(userid.equalsIgnoreCase("LEE"))
+			return new UsersDTO("이길동","22","방배동");
+		else {
+			return new UsersDTO("박길동","30","서초동");
+		}
+	}//////////
+	
+	@PostMapping("/json/users/one")
+	public UsersDTO getJsonOne(@RequestBody UsersDTO user) {
+		System.out.println("클라이언트로부터 받은 JSON : "+user);
+		return user;
+	}////////
+	
+	@PostMapping("/json/users")
+	   public List<UsersDTO> getJsonAll(@RequestBody List<UsersDTO> users){
+	      return users;
+	}///////////
+	
+	@PutMapping("/json/users/{userid}")
+	public UsersDTO updateUser(@RequestBody UsersDTO user,@PathVariable String userid) {
+		if(userid.equalsIgnoreCase("KIM")) {
+			user.setAddr("워싱턴");
+			user.setAge("100");
+			user.setName("바이든");
+		}
+		return user;
+	}/////////////////
+	
+	@DeleteMapping("/json/users/{userid}")
+	public UsersDTO deleteuser(@RequestBody UsersDTO user,@PathVariable String userid) {
+		
+		return user;
+	}
+	
+	
+}///

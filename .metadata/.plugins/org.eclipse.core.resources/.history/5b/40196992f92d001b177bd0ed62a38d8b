@@ -1,0 +1,5 @@
+package com.kosmo.rest.service;
+
+public class ContactsDAO {
+
+}

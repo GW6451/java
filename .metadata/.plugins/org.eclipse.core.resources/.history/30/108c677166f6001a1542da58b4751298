@@ -1,0 +1,8 @@
+package collection;
+
+public class AddressCollectionLogicProject {
+	public static final int MAX_PERSON = 3;
+
+
+
+}

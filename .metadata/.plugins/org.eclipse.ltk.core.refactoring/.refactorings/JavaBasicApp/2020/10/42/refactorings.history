@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;InsertSQL.java&apos; to &apos;JavaBasicApp/src/jdbc25.statement&apos;&#x0D;&#x0A;- Original project: &apos;JavaBasicApp&apos;&#x0D;&#x0A;- Destination element: &apos;JavaBasicApp/src/jdbc25.statement&apos;&#x0D;&#x0A;- Original element: &apos;jdbc25.statement.InsertSQL.java&apos;" description="Copy compilation unit" destination="/src&lt;jdbc25.statement" element1="/src&lt;jdbc25.statement{InsertSQL.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1602722023907" units="1" version="1.0"/>
+</session>

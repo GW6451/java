@@ -1,0 +1,50 @@
+<!-- 작성하기 버튼 -->
+		<div class="row">
+			<div class="col-md-12 text-right">
+				<a href="<c:url value="/DataRoom/Write.kosmo"/>"
+					class="btn btn-success">등록</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">&nbsp;</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table
+					class="table table-bordered table-hover table-condensed text-center">
+					<!-- 테이블 컬럼폭은 col-*-*계열로 설정 -->
+					<tr>
+						<th class="col-md-1 text-center">번호</th>
+						<th class="text-center">제목</th>
+						<th class="col-md-1 text-center">작성자</th>
+						<th class="col-md-2 text-center">첨부파일</th>
+						<th class="col-md-1 text-center">다운로드</th>
+						<th class="col-md-2 text-center">등록일</th>
+					</tr>
+					<c:if test="${empty list }" var="isEmpty">
+						<tr>
+							<td colspan="6">등록된 게시물이 없어요</td>
+						</tr>
+					</c:if>
+					<c:if test="${!isEmpty}">
+						<c:forEach var="item" items="${list }" varStatus="loop">
+							<tr>
+								<td>${item.no }</td>
+								<td class="text-left"><a href="<c:url value='/DataRoom/View.kosmo?no=${item.no}'/>">${item.title }</a></td>
+								<td>${item.name}</td>
+								<td class="attachfile"><a class="downfile${loop.count}"  href="<c:url value="/DataRoom/Download.kosmo?filename=${item.attachFile}&no=${item.no}"/>">${item.attachFile}</a></td>
+								<td id="downcount${loop.count}">${item.downCount}</td>
+								<td>${item.postDate }</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
+			</div><!-- column -->			
+		</div><!-- row -->	
+		<!-- 페이징 -->
+		<div class="row">
+			<div class="col-md-12 text-center">
+				1 2 3 4 5 6 7 8 9 10
+			</div>
+		</div>			
+	</div><!-- container -->

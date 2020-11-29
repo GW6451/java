@@ -1,0 +1,20 @@
+package thread23;
+
+//스레드로 구현하지 않은 클래스
+class NotThread{
+	String title;
+	public NotThread(String title) {
+		this.title = title;
+	}
+	//스레드로 구현하지 않은 메소드
+	
+	
+}
+
+public class ThreadApp {
+
+	public static void main(String[] args) {
+
+	}/////main
+
+}///////////class

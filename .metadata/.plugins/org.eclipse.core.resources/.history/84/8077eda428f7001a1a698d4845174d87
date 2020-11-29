@@ -1,0 +1,98 @@
+package thread23;
+
+//스레드로 구현하지 않은 클래스
+class NotThread{
+	String title;
+	public NotThread(String title) {
+		this.title = title;
+	}
+	//스레드로 구현하지 않은 메소드
+	void notThreadMethod() {
+		//아래 로직이 시간이 오래 걸리는 작업이라고 가정
+		for(int i=1; i<=10; i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {e.printStackTrace();}//멈춘다
+			System.out.println(String.format("%s]i = %d", title,i));
+		}
+	}
+	
+}
+//스레드로 구현한 클래스
+//1]Thread클래스를 상속받아 스레드 구현
+class YesThread extends Thread{
+	
+	public YesThread(String threadName) {
+		super(threadName);
+	}
+	void threadMethod() throws InterruptedException {
+		//아래 로직이 시간이 오래 걸리는 작업이라고 가정
+		for(int i=1; i<=10; i++) {
+			//sleep(천분의 1초);
+			//스레드를 1000분 1초동안 wait상태로 빠지게 하는 메소드
+			//1000분의 1초 뒤에는 다시 Runnable상태로 돌아간다
+				sleep(1000);
+			System.out.println(String.format("%s]i = %d", getName(),i));
+		}
+	}
+	/*
+	 2] run()메소드 오버라이딩
+	 - run()메소드 안에 시간이 오래걸리는 직접 기술
+	 - 개발자가 직접 호출 못하고 스레드가 Running상태로 들어갔을때 자동으로 호출되는 메소드(콜백 메소드)
+	 */
+	@Override
+	public void run() {
+		try {
+			threadMethod();		
+		} catch(InterruptedException e) {e.printStackTrace();}
+	}
+	
+}
+
+//종속 스레드로 사용할 스레드]
+//1]Thread 클래스 상속
+class DaemonThread extends Thread{
+	//2]run메소드 오버라이딩
+	@Override
+	public void run() {
+		while(true) {
+			System.out.println(String.format("%s] BGM",getName()));
+		}
+	}
+	
+}
+
+
+public class ThreadApp {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.out.println("main 스레드 시작");
+		/*
+		//스레드로 구현하지 않은 클래스 테스트]
+		NotThread nt1 = new NotThread("1st Class");
+		NotThread nt2 = new NotThread("2nd Class");
+		nt1.notThreadMethod();
+		nt2.notThreadMethod();
+		*/
+		//스레드로 구현한 클래스 테스트]
+		YesThread yt1 = new YesThread("1st Thread");
+		YesThread yt2 = new YesThread("2nd Thread");
+		yt1.setName("1번 스레드");
+		yt1.start();//스레드를 Runnable상태로 전이 시킴. run()메소드 안의 코드
+		//join메소드 : start()호출 후에 join()메소드를 호출해야한다. 2)join()메소드를 호출한 스레드가 다 실행이 끝나야 다른 스레드가 동작한다
+		//yt1.join();
+		
+		yt2.setPriority(Thread.MAX_PRIORITY);//우선순위가 높다고 그 스레드가 먼저 실행된다는 보장은 없다(확률만 높을뿐)
+		yt2.start();
+		
+		System.out.println("현재 활성화 상태(Runnable 혹은 Running상태)에 있는 스레드 수 : "+Thread.activeCount());
+		System.out.println("첫번째 스레드 우선권 : "+yt1.getPriority());
+		System.out.println("두번째 스레드 우선권 : "+yt2.getPriority());
+		System.out.println("main스레드 우선권 : "+Thread.currentThread().getPriority());
+		System.out.println("현재 실행중인(Running) 스레드 : "+Thread.currentThread().getName());
+		
+		System.out.println("main 스레드 끝");
+
+	}/////main
+
+}///////////class

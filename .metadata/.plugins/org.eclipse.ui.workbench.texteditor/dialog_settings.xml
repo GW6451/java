@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value=""/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="true"/>
+		<item key="wholeword" value="true"/>
+		<item key="incremental" value="true"/>
+		<item key="isRegEx" value="true"/>
+		<list key="findhistory">
+			<item value="^\s*\n"/>
+			<item value="all"/>
+			<item value="dogs"/>
+			<item value="coffee"/>
+			<item value="men"/>
+			<item value="women"/>
+			<item value=".ui-datepicker-trigger"/>
+			<item value="ui-datepicker-trigger"/>
+			<item value="ldset&gt;\R\R\t\t&lt;legend&gt;end\(\)함수/find\(선택자\)함수&lt;/legend&gt;\R\R\t\t&lt;span title=&quot;SPAN1&quot;&gt;SPAN1&lt;/span&gt; &lt;span title=&quot;SPAN2&quot;&gt;SPAN2&lt;/span&gt; &lt;span\R\t\t\ttitle=&quot;SPAN3&quot;&gt;SPAN3&lt;/span&gt;\R\R\t\t&lt;div&gt;\R\R\t\t\t&lt;p&gt;\R\R\t\t\t\t&lt;b&gt;축구&lt;/b&gt;\R\R\t\t\t&lt;/p&gt;\R\R\t\t\t&lt;p&gt;\R\R\t\t\t\t&lt;b&gt;농구&lt;/b&gt;\R\R\t\t\t&lt;/p&gt;\R\R\t\t\t&lt;p&gt;\R\R\t\t\t\t&lt;b&gt;배구&lt;/b&gt;\R\R\t\t\t&lt;/p&gt;\R\R\t\t\t&lt;button&gt;확인&lt;/button&gt;\R\R\t\t&lt;/div&gt;\R\R\t&lt;/field"/>
+			<item value="et&gt;\R\R\t\t&lt;legend&gt;폼 셀렉터 연습&lt;/legend&gt;\R\R\t\t&lt;h2&gt;텍스트 복사&lt;/h2&gt;\R\R\t\t&lt;input type=&quot;text&quot; name=&quot;src&quot; id=&quot;src&quot; /&gt; &lt;input type=&quot;button&quot;\R\t\t\tvalue=&quot;복사&quot; /&gt; &lt;input type=&quot;text&quot; name=&quot;desc&quot; id=&quot;desc&quot; /&gt; ​\R\R\t\t&lt;h2&gt;선택상자의 값 복사&lt;/h2&gt;\R\R\t\t&lt;select name=&quot;sel&quot; id=&quot;sel&quot;&gt;\R\R\t\t\t&lt;option value=&quot;baseball&quot;&gt;야구&lt;/option&gt;\R\R\t\t\t&lt;option value=&quot;balleyball&quot;&gt;배구&lt;/option&gt;\R\R\t\t\t&lt;option value=&quot;scocker&quot;&gt;축구&lt;/option&gt;\R\R\t\t&lt;/select&gt; &lt;input type=&quot;text&quot; name=&quot;sport&quot; id=&quot;sport&quot; /&gt;\R\R\t\t&lt;h2&gt;radio상자의 값 복사&lt;/h2&gt;\R\R\t\t&lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;M&quot; /&gt;남자 &lt;input type=&quot;radio&quot;\R\t\t\tname=&quot;sex&quot; value=&quot;W&quot; /&gt;여자 &lt;input type=&quot;text&quot; name=&quot;gender&quot;\R\t\t\tid=&quot;gender&quot; /&gt; &lt;input type=&quot;button&quot; value=&quot;확인&quot; id=&quot;btn&quot; /&gt;\R\R\t\t&lt;h2&gt;메일선택&lt;/h2&gt;\R\R\t\t&lt;input type=&quot;checkbox&quot; value=&quot;all&quot;&gt;전체 선택\R\R\t\t&lt;ul style=&quot;list-style-type: decimal;&quot;&gt;\R\R\t\t\t&lt;li&gt;&lt;input type=&quot;checkbox&quot; name=&quot;mailing&quot; value=&quot;mail1&quot; /&gt;메일1&lt;/li&gt;\R\R\t\t\t&lt;li&gt;&lt;input type=&quot;checkbox&quot; name=&quot;mailing&quot; value=&quot;mail2&quot; /&gt;메일2&lt;/li&gt;\R\R\t\t\t&lt;li&gt;&lt;input type=&quot;checkbox&quot; name=&quot;mailing&quot; value=&quot;mail3&quot; /&gt;메일3&lt;/li&gt;\R\R\t\t\t&lt;li&gt;&lt;input type=&quot;checkbox&quot; name=&quot;mailing&quot; value=&quot;mail4&quot; /&gt;메일4&lt;/li&gt;\R\R\t\t\t&lt;li&gt;&lt;input type=&quot;checkbox&quot; name=&quot;mailing&quot; value=&quot;mail5&quot; /&gt;메일5&lt;/li&gt;\R\R\t\t&lt;/ul&gt;\R\R\t&lt;/fiel"/>
+			<item value="JNDI"/>
+			<item value="prevPa"/>
+			<item value="DataRoomWrite"/>
+			<item value="table-hover"/>
+			<item value="hover"/>
+		</list>
+		<list key="replacehistory">
+			<item value=""/>
+			<item value="강아지"/>
+			<item value="커피"/>
+			<item value="남자"/>
+			<item value="여자"/>
+			<item value="park"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1025"/>
+		<item key="DIALOG_Y_ORIGIN" value="441"/>
+		<item key="DIALOG_WIDTH" value="288"/>
+		<item key="DIALOG_HEIGHT" value="391"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;MainPage.jsp&apos; to &apos;KimYouKyungProject1&apos;" description="Move &apos;MainPage.jsp&apos; to &apos;KimYouKyungProject1&apos;" destination="/KimYouKyungProject1" element1="/KimYouKyungProj2/WebContent/MainPage.jsp" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1605790691074" updateReferences="true"/>
+</session>

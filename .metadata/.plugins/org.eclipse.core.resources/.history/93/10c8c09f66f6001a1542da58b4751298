@@ -1,0 +1,12 @@
+package collection;
+
+import java.util.List;
+
+public class AddressCollectionLogicProject {
+	
+	public static final int MAX_PERSON = 3;
+	List<Person> person;
+
+
+
+}

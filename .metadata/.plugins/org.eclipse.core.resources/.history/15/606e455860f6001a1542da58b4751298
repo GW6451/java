@@ -1,0 +1,80 @@
+package exception21;
+
+import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
+/*
+ finally절 : 예외가 발생하든 안하든 실행하고자 하는 구문을 기술
+ 
+ 1) try ~ catch절 : 예외 직접처리
+ 2) try ~ catch~finally절 : 예외 직접 처리후 반드시 실행할 문장도 처리
+ 3) try ~ finally절 : 예외는 던지고(throws) 예외가 발생하든 안하든 반드시 실행할 문장 처리
+ 
+ #finally절 안에 있는 명령문은 return문을 만나더라도 실행됨.
+ 	단, System.exit(0)를 만나면 당연히 실행 안됨
+ */
+public class ExceptionFinallyApp {
+	/*
+	 * [1. 외부 자원 사용시 발생하는 예외 클래스를(컴파일 예외) 처리방법]
+	 * 1-1. 직접 처리하지 말고 던지자 
+	 * 		해당 메소드 명
+	 */
+	//컴파일 예외 발생하는 메소드]
+	static void compile() throws IOException{
+		System.out.println("한 문자 입력");
+		//방법1] 예외를 던진다
+		int ascii = System.in.read();
+		System.out.println("입력한 문자 : "+(char)ascii);
+		//방법2] 직접 try~catch절로 처리
+		/*try {
+		int ascii = System.in.read();
+		}
+		catch(Exception e) {}
+		
+		System.out.println("입력한 문자 : "+(char)ascii);*/
+	}
+	//런타임 예외 발생하는 메소드
+	static void runtime() {
+		Integer.parseInt("일억원");
+	}
+	static void tryCatchFinally() {
+		Scanner sc =new Scanner(System.in);
+		System.out.println("나이 입력");
+		int age = -10;
+		try {
+			age = sc.nextInt();
+			//return;//정상적으로 숫자 입력시 finally 실행됨
+			System.exit(0);//바로 프로그램 종료
+		}
+		catch(InputMismatchException e) {
+			System.out.println("나이는 숫자만");
+		}
+		finally {
+			//아래는 예외가 발생하든 안하든 무조건 출력]
+			System.out.println("당신의 10년 후 나이 : "+(age+10));
+		}
+	}
+	public static void main(String[] args) /*throws NumberFormatException*//*throws IOException*/ {
+		//컴파일 예외는 던지거나  try~catch하거나
+		//1]던지거나
+		//compile();
+		
+		try {
+			compile();
+		}
+		catch(IOException e) {}
+		//런타임 예외는 반드시 try~catch]
+		try {
+		runtime();
+		}
+		catch(Exception e) {
+			System.out.println("숫자 형식이 아니에요 : " + e.getMessage());
+		}
+		
+		tryCatchFinally();
+
+	}//////main
+
+}///////class

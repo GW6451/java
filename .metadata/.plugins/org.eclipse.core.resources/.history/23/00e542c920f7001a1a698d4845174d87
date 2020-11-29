@@ -1,0 +1,26 @@
+package thread23;
+
+//스레드로 구현하지 않은 클래스
+class NotThread{
+	String title;
+	public NotThread(String title) {
+		this.title = title;
+	}
+	//스레드로 구현하지 않은 메소드
+	void notThreadMethod() {
+		//아래 로직이 시간이 오래 걸리는 작업이라고 가정
+		for(int i=1; i<=10; i++) {
+			Thread.sleep(2000);//멈춘다
+			System.out.println(String.format("%s]i = %d", title,i));
+		}
+	}
+	
+}
+
+public class ThreadApp {
+
+	public static void main(String[] args) {
+
+	}/////main
+
+}///////////class

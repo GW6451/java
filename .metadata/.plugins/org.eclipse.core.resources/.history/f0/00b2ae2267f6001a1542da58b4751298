@@ -1,0 +1,21 @@
+package collection;
+
+import java.util.List;
+import java.util.Vector;
+
+public class AcademyCollectionLogicProject {
+	
+	public static final int MAX_PERSON = 3;
+	List<Person> person;
+	
+	public AcademyCollectionLogicProject() {
+		person = new Vector<Person>();
+		
+	}/////
+	
+	public void printMenu() {
+		System.out.println("================Menu==============");
+		System.out.println("1.입력  2.출력  3.수정  4.삭제  5.검색  9.종료");
+	}
+
+}////class AcademyCollectionLogicProject

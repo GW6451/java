@@ -1,0 +1,27 @@
+package exception21;
+
+public class ExceptionBasicApp {
+
+	public static void main(String[] args) {
+		/*
+		 1] 컴파일 에러(Checked Exception):
+		  			- 컴파일시 발생하는 에러
+		  			- Syntax erorr(문법 오류), IOException(예외클래스),SQLException(예외클래스) 등
+		  			- 컴파일이 안되면 실행이 안됨
+		  			- 컴파일 에러(외부자원 사용시 발생하는 컴파일 에러 : IOException,SQLException)는 던지거나
+		  			     직접 처리(try~catch절)할 수 있다
+		  			     단 Syntax error(문법오류)는 직접 수정해야함 
+		 */
+		//1-1]Syntax(문법오류)
+		//Int num;[x]
+		int num;//[o]
+		if(true); {}
+		//else {}[x]else는 항상 if와 짝을 이루어야 한다
+		//1-2]외부 자원 사용시 발생하는 예외
+		//		해결책 : 예외를 던지거나(throw절)나 직접 처리(try~catch절 사용)
+		
+		System.in.read();
+
+	}//////main
+
+}/////////class

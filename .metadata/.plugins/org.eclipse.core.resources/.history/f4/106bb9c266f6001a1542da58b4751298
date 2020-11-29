@@ -1,0 +1,14 @@
+package collection;
+
+import java.util.List;
+
+public class AcademyCollectionLogicProject {
+	
+	public static final int MAX_PERSON = 3;
+	List<Person> person;
+	
+	public AcademyCollectionLogicProject
+
+
+
+}

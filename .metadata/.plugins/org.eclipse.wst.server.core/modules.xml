@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:textProject" serverId="JSPServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:SpringRestProj" serverId="SpringRestServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:JQueryProj" serverId="JQueryServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSPProj2255555555555522" serverId="JSPServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSPProj (2)" serverId="JSPServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSPProj (4)" serverId="JSPServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSPProj (6)" serverId="JSPServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSPProj (5)" serverId="JSPServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:SpringProj" serverId="SpringServer"/>
+  <module moduleId="org.eclipse.jst.jee.server:KimYouKyungProj2" serverId="KimYouKyungProj2"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSPProj" serverId="JSProj"/>
+  <module moduleId="org.eclipse.jst.jee.server:KimPrac_model2" serverId="KimPrac"/>
+  <module moduleId="org.eclipse.jst.jee.server:BootStrapProj" serverId="BootStrapProj"/>
+  <module moduleId="org.eclipse.jst.jee.server:testProject" serverId="JSPServer"/>
+</modules>
