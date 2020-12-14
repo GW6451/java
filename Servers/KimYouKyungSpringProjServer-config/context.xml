@@ -18,8 +18,8 @@
 
     <!-- Default set of monitored resources. If one of these changes, the    -->
     <!-- web application will be reloaded.                                   -->
-    
-    <ResourceLink global="spring/maven" name="spring/maven" type="javax.sql.DataSource"/>
+    <ResourceLink global="spring/KOSMO" name="spring/KOSMO"
+		type="javax.sql.DataSource" />
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>

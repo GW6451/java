@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <body>
 <hr/>
-<nav class="navbar navbar-default navbar-fixed-bottom" style="background: linear-gradient( to right, palevioletred,pink)">
+<nav class="navbar navbar-default navbar-fixed-bottom" style="background: linear-gradient(to right , #faaca8,#ddd6f3)">
 	<div class="container-fluid">
 		<!--화면 크기가 작을때 보여지는 네비게이션바(모바일용)  -->
 		<div class="navbar-header">
@@ -18,7 +19,9 @@
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="검색">
 				</div>
-				<button type="submit" class="btn" style="background-color: pink;color: white">확인</button>
+				<button type="button" class="btn" id="btn" style="background-color: white">
+					<img class="btn-img" src='<c:url value="/Images/search.png"/>' style="width:25px; height: 25px"/>
+				</button>
 			</form>
 		</div>
 	</div>

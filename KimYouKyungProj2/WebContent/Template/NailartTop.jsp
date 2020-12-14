@@ -5,11 +5,11 @@
 	body{ padding-top:70px}
 </style>
 <!--상단메뉴 시작-->
-<nav class="navbar navbar-default navbar-fixed-top" style="background: linear-gradient( to right, palevioletred,pink)">
+<nav class="navbar navbar-default navbar-fixed-top" style="background: linear-gradient( to right , #faaca8,#ddd6f3)">
 	<div class="container-fluid">
 		<!--화면 크기가 작을때 보여지는 네비게이션바(모바일용)  -->
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" style="background-color: lavenderblush"
+			<button type="button" class="navbar-toggle collapsed" style="background-color: white"
 				data-toggle="collapse" data-target="#collapse-menu">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
@@ -25,7 +25,9 @@
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="검색">
 				</div>
-				<button type="submit" class="btn" style="background-color: pink;color: white">확인</button>
+				<button type="button" class="btn" id="btn" style="background-color: white">
+					<img class="btn-img" src='<c:url value="/Images/search.png"/>' style="width:25px; height: 25px"/>
+				</button>
 			</form>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href='<c:url value="/MainPage.kosmo"/>'><span style="color: white">HOME</span></a></li>

@@ -22,19 +22,16 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient( to left , #ffffff,#ffdde1)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->
 	<!-- 실제 내용 시작 -->
 	<div class="row">
-		<div class="col-xs-12 col-md-12" style="text-align: center">
-			<h2 style="color: deeppink">${MainPage}</h2>
-		</div>
 		
 		<!-- 네일 디자인 소개 -->
 		<div class="col-xs-12 col-md-12">
-			<h4 style="color: deeppink">&nbsp;&nbsp;★이 달의 네일디자인★</h4>
+			<h4 style="color: #ff0084">&nbsp;&nbsp;★이 달의 네일디자인★</h4>
 		</div>
 		<div class="col-xs-6 col-md-2">
 			<div class="thumbnail">
@@ -117,7 +114,7 @@
 		<!-- ------------------------------------------------------------------------------- -->
 		<!-- 네일샵 소개 -->
 		<div class="col-xs-12 col-md-12">
-			<h4 style="color: deeppink">&nbsp;&nbsp;★이 달의 네일샵★</h4>
+			<h4 style="color: #ff0084">&nbsp;&nbsp;★이 달의 네일샵★</h4>
 		</div>
 		<div class="col-xs-6 col-md-3">
 			<div class="thumbnail">

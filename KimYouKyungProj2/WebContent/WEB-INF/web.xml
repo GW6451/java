@@ -10,7 +10,7 @@
 
 	<context-param>
 		<param-name>JNDI_ROOT</param-name>
-		<param-value>java:comp/env</param-value>
+		<param-value>java:comp/env/</param-value>
 	</context-param>
 	
 	<!-- 나만의 태그 라이브러리를 사용하기 위한 설정 -->
@@ -99,7 +99,7 @@
 		<url-pattern>/Nailart/GalleryView.kosmo</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 게시판(gallery) 상세보기 -->
+	<!-- 게시판(gallery) 글작성 -->
 	<servlet>
 		<servlet-name>GalleryWrite</servlet-name>
 		<servlet-class>controller.GalleryWriteController</servlet-class>
@@ -109,6 +109,15 @@
 		<url-pattern>/Nailart/GalleryWrite.kosmo</url-pattern>
 	</servlet-mapping>
   
+  <!-- 게시판(gallery) 글작성 중 이미지 미리보기 -->
+  <servlet>
+		<servlet-name>PrevImg</servlet-name>
+		<servlet-class>controller.PrevImgController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PrevImg</servlet-name>
+		<url-pattern>/Nailart/PrevImg.kosmo</url-pattern>
+	</servlet-mapping>
   <!-- 시작문서 설정 -->
   <welcome-file-list>
     <welcome-file>MainPage.jsp</welcome-file>

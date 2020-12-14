@@ -9,9 +9,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
 <title>Write.jsp</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 <!-- 부트스트랩 -->
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$.ajax({
+			url: "<c:url value='/Nailart/PrevImg.kosmo'/>",
+			dataType: "text",
+			type: "post",
+			data: //"id="+$(':input[name=id]').val()
+			"url="+$('#attachFileImg').val(),
+			
+			contentType: "text/html; charset=UTF-8",
+			success: function(data){
+				$('#attachFileImg').props('src',data);
+			},
+			error: function(){
+				alter("이미지 미리보기 실패");
+			}
+		});
+	});
+</script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -21,15 +40,16 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient(to left, #ffffff, #ffdde1)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->
 	<div class="container">
 		<!-- 점보트론(Jumbotron) -->
 		<div class="jumbotron"
-			style="background: linear-gradient(45deg, pink, mistyrose)">
+			style="background: linear-gradient(to right, #faaca8, #ddd6f3)">
 			<h1 style="text-align: center; color: white; font-style: bold">글
 				쓰기</h1>
 		</div>
@@ -38,40 +58,34 @@
 	<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 		<div class="row">
 			<!-- ------------------------------------------------------------------------------- -->
-			<form class="form-horizontal" method="post" id="frm">
+			<form class="form-horizontal" method="post"
+				enctype="multipart/form-data" runat="KimYouKyungProj2Server"
+				action="<c:url value='/Nailart/GalleryWrite.kosmo'/>">
 				<div class="col-xs-2 col-xs-offset-10 col-md-1 col-md-offset-11">
-					<a href="<c:url value="/NailartMember/GalleryView.kosmo"/>"
-						class="btn" style="background-color: pink; color: white"
-						role="button">등록</a>
+					<button type="submit" class="btn"
+						style="background: linear-gradient(to right, #faaca8, #ddd6f3); color: white"
+						role="button">등록</button>
 				</div>
-				<div class="col-xs-12 col-md-12">
-					<h1></h1>
+				<div class="form-group">
+					<div class="col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-4">
+						<img class="img-rounded" id="attachFileImg" src="#" alt="사진첨부" />
+						<input type="file" id="attachfile">
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="id"
+						value="${sessionScope.id}" />
 				</div>
 				<div class="form-group">
 					<input type="text" class="form-control" id="title" placeholder="제목" />
 				</div>
 				<div class="form-group">
-
 					<textarea class="form-control" name="content" rows="5"
 						placeholder="내용 입력하세요"></textarea>
-
 				</div>
 			</form>
 		</div>
 	</div>
-	<div class="col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-4"
-		id="prevImg">
-		<img class="img-rounded" src="#" value=""
-			style="width: 100%; height: 100%; text-align: center" />
-		<div class="form-group">
-			<input type="file" name="attachfile"
-				multiple=".jpg,.jpeg,.jpe,.jfif,.png" id="hidden-file"
-				style="display: none" /> <input type="text" name="attachFile"
-				id="attachFile" class="hidden" /> <img alt="사진첨부"
-				src="<c:url value="/Images/photo.png"/>" border='0'
-				onclick="document.all.attachfile.click(); document.all.attachFile.value=documnet.all.attachfile.vlaue" />
-		</div>
-	</div>
 
 	<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 		<h1></h1>
@@ -84,11 +98,65 @@
 	</div>
 	<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 		<h1></h1>
+	</div>
+	<div class="modal fade" id="small-modal" data-backdrop="static">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button class="close" data-dismiss="modal">
+						<span>&times; 
+					</button>
+					</button>
+					<h5 class="modal-title">
+						<span class="glyphicon glyphicon-bullhorn"></span> 경고 메시지
+					</h5>
+					<h6 id="warningMessage"></h6>
+				</div>
+
+			</div>
+		</div>
 	</div>
 	<!-- 실제 내용 끝 -->
 	<!-- 푸터 시작 -->
 	<jsp:include page="/Template/NailartFooter.jsp" />
 	<!-- 푸터 끝 -->
+	
+	<script>
+		/*    	
+		//파일 사이즈(바이트):파일객체.files[0].size
+		//파일 명:파일객체.files[0].name
+		//파일 컨텐츠 타입:파일객체.files[0].type
+		 */
+		$(function() {
+			var focusObject;
 
+			//모달창이 닫혔을때 발생하는 이벤트 처리 - 즉 해당 입력 요소 에 포커스 주기
+			$('#small-modal').on('hidden.bs.modal', function() {
+				focusObject.focus();
+			});
+
+			$('form').on('submit', function() {
+
+				if ($(this).get(0).title.value == "") {
+					$('#warningMessage').html("제목을 입력하세요");
+					$('#small-modal').modal('show');
+					focusObject = $(this).get(0).title;
+					return false;
+				}
+				if ($(this).get(0).attachFile.value == "") {
+					$('#warningMessage').html("파일을 첨부하세요");
+					$('#small-modal').modal('show');
+					focusObject = $(this).get(0).attachFile;
+					return false;
+				}
+				if ($(this).get(0).content.value == "") {
+					$('#warningMessage').html("내용를 입력하세요");
+					$('#small-modal').modal('show');
+					focusObject = $(this).get(0).content;
+					return false;
+				}
+			});
+		});
+	</script>
 </body>
 </html>

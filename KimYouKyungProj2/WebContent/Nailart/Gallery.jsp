@@ -22,14 +22,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient( to left , #ffffff,#ffdde1)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->
 	<div class="container">
 		<!-- 점보트론(Jumbotron) -->
-		<div class="jumbotron" style="background: linear-gradient(45deg, pink, mistyrose); width:100%; margin: auto">
-			<h1 style="text-align: center; color: white; font-style: bold">GALLERY</h1>
+		<div class="jumbotron" style="background: linear-gradient(to right , #faaca8,#ddd6f3); width:100%; margin: auto">
+			<h1 style="text-align: center; color:white; font-style: bold">GALLERY</h1>
 		</div>
 		<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 			<h1></h1>
@@ -39,17 +39,17 @@
 	<div class="row">
 		<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 			<div class="col-xs-1 col-md-1 col-xs-offset-9 col-md-offset-11">
-				<a href="/Nailart/GalleryWrite.kosmo" class="btn" role="button" style="background-color: pink; color: white; margin-right: auto">글작성</a>
+				<a href="<c:url value='/Nailart/GalleryWrite.kosmo'/>" class="btn" role="button" style="background: linear-gradient(to right , #faaca8,#ddd6f3); color: white; margin-right: auto">글작성</a>
 			</div>
 			<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 				<h1></h1>
 			</div>
 			<table class="table table-bordered" style="margin:auto">
 				<tr>
-					<th class="col-xs-1 col-md-1 text-center"><label for="no" style="color:palevioletred">no</label></th>
-					<th class="col-xs-6 col-md-7 text-center"><label for="title" style="color:palevioletred">제 목</label></th>
-					<th class="col-xs-2 col-md-3 text-center"><label for="id" style="color:palevioletred">작성자</label></th>
-					<th class="col-xs-1 col-md-2 text-center"><label for="likecount" style="color:palevioletred"><span class="glyphicon glyphicon-thumbs-up"></span></label></th>					
+					<th class="col-xs-1 col-md-1 text-center"><label for="no" style="color:#ff0084">no</label></th>
+					<th class="col-xs-6 col-md-7 text-center"><label for="title" style="color:#ff0084">제 목</label></th>
+					<th class="col-xs-2 col-md-3 text-center"><label for="id" style="color:#ff0084">작성자</label></th>
+					<th class="col-xs-1 col-md-2 text-center"><label for="likecount" style="color:#ff0084"><span class="glyphicon glyphicon-thumbs-up"></span></label></th>					
 				</tr>
 				<c:if test="${empty list }" var="isEmpty">
 						<tr>
@@ -59,10 +59,10 @@
 				<c:if test="${!isEmpty}">
 					<c:forEach var="item" items="${list}" varStatus="loop">
 						<tr>
-							<th class="col-xs-1 col-md-1 text-center" style="color:palevioletred">${item.no}</th>
-							<th class="col-xs-6 col-md-7 text-center" style="color:palevioletred"><a href="<c:url value='/Nailart/GalleryView.kosmo?no=${item.no}'/>">${item.title}</a></th>
-							<th class="col-xs-2 col-md-3 text-center" style="color:palevioletred">${item.id}</th>
-							<th class="col-xs-1 col-md-2 text-center" style="color:palevioletred">${item.likecount}</th>					
+							<th class="col-xs-1 col-md-1 text-center" style="color:#ff0084">${item.no}</th>
+							<th class="col-xs-6 col-md-7 text-center" style="color:#ff0084"><a href="<c:url value='/Nailart/GalleryView.kosmo?no=${item.no}'/>">${item.title}</a></th>
+							<th class="col-xs-2 col-md-3 text-center" style="color:#ff0084">${item.id}</th>
+							<th class="col-xs-1 col-md-2 text-center" style="color:#ff0084">${item.likecount}</th>					
 						</tr>
 					</c:forEach>
 				</c:if>

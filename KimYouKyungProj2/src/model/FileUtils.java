@@ -23,11 +23,11 @@ public class FileUtils {
 		return mr;
 	}//////////////upload
 	//파일 삭제 로직]
-	public static void deleteFile(HttpServletRequest req, String uploadPath, String attachFile) {
+	public static void deleteFile(HttpServletRequest req, String uploadPath, String attachfile) {
 		//서버의 물리적 경로 얻기]
 		String saveDirectory = req.getServletContext().getRealPath(uploadPath);
 		//파일 객체 생성]
-		File file = new File(saveDirectory+File.separator+attachFile);
+		File file = new File(saveDirectory+File.separator+attachfile);
 		//파일 존재 여부 판단후 삭제]
 		if(file.exists()) file.delete();
 		

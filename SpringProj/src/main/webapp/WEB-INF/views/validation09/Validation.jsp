@@ -2,8 +2,8 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -80,7 +80,7 @@ body {
 						<td>이름</td>
 						<!-- param.name으로 받을때는 한글 깨진다.설정 필요 -->
 						<td><input type="text" name="name" value="${param.name}" />
-							
+
 							<!-- 에러 메시지 표시
          <접두어:errors path="커멘트드객체명.속성명"/>
                  단,커맨드 객체명은 소문자로 시작

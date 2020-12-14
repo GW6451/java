@@ -39,7 +39,6 @@ public class LoginPageController extends HttpServlet{
 			return;
 		}
 		else {
-			
 			req.getSession().setAttribute("id", id);
 			req.getRequestDispatcher("/MainPage.jsp").forward(req, resp);
 		}

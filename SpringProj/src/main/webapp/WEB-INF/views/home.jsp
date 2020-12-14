@@ -20,6 +20,8 @@
 		<h2>servlet-context.xml파일에 설정된 resources태그 사용-폴더 생성후 매핑이름 지정(폴더명과
 			같지 않아도 된다)</h2>
 		<img src="<c:url value="/images/sumnail.png"/>" alt="매핑 이름으로" />
+		<%--/SpringProj/src/main/webapp/resources/images/sumnail.png --%>
+		<%--/SpringProj/src/main/webapp/images/sumnail.png --%>
 		<h2>resources태그 미 사용-&lt;default-servlet-handler/&gt;-디렉토리명으로 접근</h2>
 		<img src="<c:url value="/images/sumnail.png"/>" alt="디렉토리 구조로 접근" />
 

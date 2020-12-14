@@ -85,7 +85,6 @@
 			</div>		
 		</div>
 	</div><!-- container -->
-	
 	<!-- 경고창 모달 시작 -->
     <div class="modal fade" id="small-modal" data-backdrop="static">
 	  <div class="modal-dialog modal-sm">
@@ -97,12 +96,9 @@
 	    		<h5 class="modal-title"><span class="glyphicon glyphicon-bullhorn"></span> 경고 메시지</h5>
 	    		<h6 id="warningMessage"></h6>
 	    	</div>
-	      	
 	    </div>
 	  </div>
 	</div>
-	
-	
 	<!-- 실제 내용 끝 -->
 	<!-- 푸터 시작 -->
 	<jsp:include page="/Template/DataRoomFooter.jsp"/>
@@ -159,15 +155,9 @@
 					$('#small-modal').modal('show');
 					focusObject =$(this).get(0).content;
 					return false;					
-				}
-				
-			});
-			
-			
+				}				
+			});			
 		});
-	
-	
 	</script>
-	
 </body>
 </html>

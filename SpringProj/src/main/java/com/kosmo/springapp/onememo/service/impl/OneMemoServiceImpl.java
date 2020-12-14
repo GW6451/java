@@ -18,8 +18,7 @@ import com.kosmo.springapp.onememo.service.OneMemoService;
  */
 @Service("memoService")
 public class OneMemoServiceImpl implements OneMemoService {
-	
-	
+		
 	//OneMemoDAO주입]	
 	@Resource(name="oneMemoDAO")
 	private OneMemoDAO dao;

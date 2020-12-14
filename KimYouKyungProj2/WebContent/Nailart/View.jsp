@@ -22,7 +22,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient( to left , #ece9e6,#ffffff)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->

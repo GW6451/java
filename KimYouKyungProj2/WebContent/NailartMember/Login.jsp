@@ -28,14 +28,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient( to left , #ffffff,#ffdde1)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->
 	<div class="container">
 		<!-- 점보트론(Jumbotron) -->
 		<div class="jumbotron"
-			style="background: linear-gradient(45deg, pink, mistyrose)">
+			style="background: linear-gradient( to right , #faaca8,#ddd6f3)">
 			<h1 style="text-align: center; color: white; font-weight: bold">로그인</h1>
 		</div>
 	</div>
@@ -55,9 +55,9 @@
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-block"
-						style="background-color: pink; color: white">로그인</button>
+						style="background: linear-gradient( to right , #faaca8,#ddd6f3); color: white ">로그인</button>
 				</div>
-				<div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+				<div class="col-xs-12 col-md-12">
 					<h1></h1>
 					<hr/>
 				</div>
@@ -103,7 +103,5 @@
 	    if (parts.length === 2) return parts.pop().split(";").shift();
 	  }
 	</script>
-
-
 </body>
 </html>

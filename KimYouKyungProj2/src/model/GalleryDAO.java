@@ -20,11 +20,11 @@ public class GalleryDAO {
 	private PreparedStatement psmt;
 	private ResultSet rs;
 	//커넥션풀사용
+	
 	public GalleryDAO(ServletContext context,String user,String password) {
-		
 		try {
 			Context ctx = new InitialContext();
-			DataSource source = (DataSource)ctx.lookup(context.getInitParameter("JNDI_ROOT")+"/kosmo");
+			DataSource source = (DataSource)ctx.lookup(context.getInitParameter("JNDI_ROOT")+"spring/KOSMO");
 			conn = source.getConnection();
 		}
 		catch (NamingException | SQLException e) {e.printStackTrace();}		
@@ -76,5 +76,56 @@ public class GalleryDAO {
 		
 		return list;
 	}//////////selectList
+	
+	public int getTotalRecordCount() {
+		int totalCount = 0;
+		String sql = "SELECT COUNT(*) FROM gallery";
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			rs.next();
+			totalCount = rs.getInt(1);
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		return totalCount;
+	}////////getTotalRecordCount
+	
+	public int insert(GalleryDTO dto) {
+		int affected = 0;
+		String sql="INSERT INTO gallery(no,id,title,attachfile,content) VALUES(SEQ_GALLERY.NEXTVAL,?,?,?,?,?)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getAttachfile());
+			psmt.setString(4, dto.getContent());
+			psmt.setInt(5, dto.getLikecount());
+			affected=psmt.executeUpdate();
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		return affected;		
+	}/////////insert
+	
+	public GalleryDTO selectOne(String no) {
+		GalleryDTO dto = null;
+		String sql="SELECT * FROM gallery WHERE no=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, no);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				dto= new GalleryDTO();
+				dto.setNo(rs.getInt(1));
+				dto.setTitle(rs.getString(7));
+				dto.setId(rs.getString(2));
+				dto.setAttachfile(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setPostdate(rs.getDate(5));
+				dto.setLikecount(rs.getInt(6));
+			}/////if
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		return dto;
+	}///////selectOne
 	
 }

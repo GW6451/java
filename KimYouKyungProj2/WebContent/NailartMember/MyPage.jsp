@@ -22,51 +22,51 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient( to left , #ffffff,#ffdde1)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->
 	<div class="container">
 		<!-- 점보트론(Jumbotron) -->
-		<div class="jumbotron" style="background: linear-gradient(45deg,pink,mistyrose)">
-			<h1 style="text-align: center; color: white; font-style: bold">회원가입</h1>
+		<div class="jumbotron" style="background: linear-gradient( to right , #faaca8,#ddd6f3)">
+			<h1 style="text-align: center; color: white; font-style: bold">마이페이지</h1>
 		</div>
 	</div>
 		<!-- 실제 내용 시작 -->
 		<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
-			<table class="table">
+			<table class="table" style="">
 				<tr>
-					<td><label for="id" style="color:palevioletred">아이디</label></td>
+					<td><label for="id" style="color:#ff0084 ">아이디</label></td>
 					<td>${dto.id}</td>
 				</tr>
 				<tr>
-					<td><label for="name" style="color:palevioletred">이름</label></td>
+					<td><label for="name" style="color:#ff0084 ">이름</label></td>
 					<td>${dto.name}</td>
 				</tr>
 				<tr>
-					<td><label for="age" style="color:palevioletred">나이</label></td>
+					<td><label for="age" style="color:#ff0084 ">나이</label></td>
 					<td>${dto.age}</td>
 				</tr>
 				<tr>
-					<td><label for="gender" style="color:palevioletred">성별</label></td>
+					<td><label for="gender" style="color:#ff0084 ">성별</label></td>
 					<td>${dto.gender}</td>
 				</tr>
 				<tr>
-					<td><label for="tel" style="color:palevioletred">휴대폰번호</label></td>
+					<td><label for="tel" style="color:#ff0084 ">휴대폰번호</label></td>
 					<td>${dto.tel}</td>
 				</tr>
 				<tr>
-					<td><label for="addr" style="color:palevioletred">주소</label></td>
+					<td><label for="addr" style="color:#ff0084 ">주소</label></td>
 					<td>${dto.addr}</td>
 				</tr>				
 				<tr>
-					<td><label for="email" style="color:palevioletred">이메일</label></td>
+					<td><label for="email" style="color:#ff0084 ">이메일</label></td>
 					<td>${dto.email}</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: center">
 					<a href="<c:url value="/Nailart/MyinfoUpdate.kosmo"/>"
-						   class="btn" style="background-color: pink; color: white" role="button">회원정보 수정</a>
+						   class="btn" style="background:linear-gradient( to right , #faaca8,#ddd6f3); color: white " role="button">회원정보 수정</a>
 					</td>
 				</tr>
 			</table>

@@ -22,13 +22,13 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style="background-color: lavenderblush">
+<body style="background: linear-gradient( to left , #ffffff,#ffdde1)">
 	<!-- 네비게이션바 시작 -->
 	<jsp:include page="/Template/NailartTop.jsp" />
 	<!-- 네비게이션바 끝 -->
 	<div class="container">
 		<!-- 점보트론(Jumbotron) -->
-		<div class="jumbotron" style="background: linear-gradient(45deg,pink,mistyrose)">
+		<div class="jumbotron" style="background: linear-gradient( to right , #faaca8,#ddd6f3)">
 			<h1 style="text-align: center; color: white; font-style: bold">회원가입</h1>
 		</div>
 	</div>
@@ -37,43 +37,43 @@
 		<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
 			<table class="table">
 				<tr>
-					<td><label for="id" style="color:palevioletred">아이디</label></td>
+					<td><label for="id" style="color:#ff0084">아이디</label></td>
 					<td><input type="text" class="form-control" name="id" id="id" placeholder="아이디"></td>
 				</tr>
 				<tr>
-					<td><label for="pwd" style="color:palevioletred">비밀번호</label></td>
+					<td><label for="pwd" style="color:#ff0084">비밀번호</label></td>
 					<td><input type="password" class="form-control" name="pwd" id="pwd" placeholder="비밀번호"></td>
 				</tr>
 				<tr>
-					<td><label for="name" style="color:palevioletred">이름</label></td>
+					<td><label for="name" style="color:#ff0084">이름</label></td>
 					<td><input type="text" class="form-control" name="name" id="name" placeholder="이름"></td>
 				</tr>
 				<tr>
-					<td><label for="age" style="color:palevioletred">나이</label></td>
+					<td><label for="age" style="color:#ff0084">나이</label></td>
 					<td><input type="text" class="form-control" name="age" id="age" placeholder="나이"></td>
 				</tr>
 				<tr>
-					<td><label for="gender" style="color:palevioletred">성별</label></td>
+					<td><label for="gender" style="color:#ff0084">성별</label></td>
 					<td>
 						<input type="radio" name="gender" value="남성"/><span style="color:palevioletred"> 남자</span>
 						<input type="radio" name="gender" value="여성"/><span style="color:palevioletred"> 여자</span>	
 					</td>
 				</tr>
 				<tr>
-					<td><label for="tel" style="color:palevioletred">휴대폰번호</label></td>
+					<td><label for="tel" style="color:#ff0084">휴대폰번호</label></td>
 					<td><input type="text" class="form-control" name="tel" id="tel" placeholder="휴대폰번호"></td>
 				</tr>
 				<tr>
-					<td><label for="addr" style="color:palevioletred">주소</label></td>
+					<td><label for="addr" style="color:#ff0084">주소</label></td>
 					<td><input type="text" class="form-control" name="addr" id="addr" placeholder="주소"></td>
 				</tr>				
 				<tr>
-					<td><label for="email" style="color:palevioletred">이메일</label></td>
+					<td><label for="email" style="color:#ff0084">이메일</label></td>
 					<td><input type="email" class="form-control" name="email" id="email" placeholder="이메일"></td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: center">			
-						<button type="submit" class="btn" style="background-color: pink;color: white">가입</button>
+						<button type="submit" class="btn" style="background: linear-gradient( to right , #faaca8,#ddd6f3); color: white ">가입</button>
 					</td>
 				</tr>				
 			</table>
